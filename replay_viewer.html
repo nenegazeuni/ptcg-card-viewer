@@ -231,7 +231,7 @@ function setLang(l){
 // NOTE: visualize_data() serializes enums as STRINGS in logs/select (e.g. "Draw","Main"),
 // while areas/energies stay as ints. The decoder below switches on the string type.
 // card art follows the UI language: ja -> assets/cards_jp/<id>.jpg, en -> assets/cards/<id>.jpg
-function cardImgUrl(id){ return 'assets/cards'+(LANG==='ja'?'_jp':'')+'/'+id+'.jpg'; }
+function cardImgUrl(id){ return 'images/'+id+'.jpg'; }
 
 let SNAP=[], idx=0, names={}, attacks={};
 

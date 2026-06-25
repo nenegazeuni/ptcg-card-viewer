@@ -9,29 +9,53 @@
     table { border-collapse: collapse; width: 100%; }
     th, td { border-bottom: 1px solid #d0d7de; padding: 8px; text-align: left; }
     .muted { color: #667085; }
+    details { border: 1px solid #d0d7de; border-radius: 12px; margin: 12px 0; padding: 8px 12px; }
+    summary { cursor: pointer; font-weight: 700; }
+    .submission { margin: 10px 0 0 18px; }
   </style>
 </head>
 <body>
   <h1>PTCG AI Battle Replays</h1>
   <p class="muted">Replay JSON は外部ストレージから読み込みます。</p>
-  <table>
-    <thead><tr><th>Group</th><th>Episode</th><th>Size</th><th>Viewer</th></tr></thead>
-    <tbody id="rows"></tbody>
-  </table>
+  <div id="replays"></div>
   <script>
     const pagesUrl = "https://nenegazeuni.github.io/ptcg-card-viewer/";
-    const rows = document.getElementById("rows");
+    const replays = document.getElementById("replays");
     const fmt = new Intl.NumberFormat("ja-JP", { maximumFractionDigits: 1 });
+    function groupBy(items, key) {
+      return items.reduce((acc, item) => {
+        const value = item[key] || "unknown";
+        (acc[value] ||= []).push(item);
+        return acc;
+      }, {});
+    }
     fetch("manifest.json").then(r => r.json()).then(manifest => {
-      rows.innerHTML = (manifest.items || []).map(item => {
-        const viewer = `${pagesUrl}replay_viewer.html?replay=${encodeURIComponent(item.url)}`;
-        const mb = fmt.format((item.size_bytes || 0) / 1000000);
-        return `<tr>
-          <td>${item.group}</td>
-          <td>${item.episode_id}</td>
-          <td>${mb} MB</td>
-          <td><a href="${viewer}">開く</a></td>
-        </tr>`;
+      const players = groupBy(manifest.items || [], "player");
+      replays.innerHTML = Object.entries(players).map(([player, playerItems]) => {
+        const submissions = groupBy(playerItems, "submission_id");
+        const submissionHtml = Object.entries(submissions).map(([submissionId, items]) => {
+          const rows = items.map(item => {
+            const viewer = `${pagesUrl}replay_viewer.html?replay=${encodeURIComponent(item.url)}`;
+            const mb = fmt.format((item.size_bytes || 0) / 1000000);
+            return `<tr>
+              <td>${item.episode_id}</td>
+              <td>${item.opponent || "-"}</td>
+              <td>${mb} MB</td>
+              <td><a href="${viewer}">開く</a></td>
+            </tr>`;
+          }).join("");
+          return `<details class="submission" open>
+            <summary>submission ${submissionId}（${items.length} replays）</summary>
+            <table>
+              <thead><tr><th>Episode</th><th>Opponent</th><th>Size</th><th>Viewer</th></tr></thead>
+              <tbody>${rows}</tbody>
+            </table>
+          </details>`;
+        }).join("");
+        return `<details open>
+          <summary>${player}（${playerItems.length} replays）</summary>
+          ${submissionHtml}
+        </details>`;
       }).join("");
     });
   </script>

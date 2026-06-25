@@ -5,14 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>PTCG AI Battle Viewer</title>
   <style>
-    body { font-family: system-ui, sans-serif; max-width: 880px; margin: 40px auto; padding: 0 20px; line-height: 1.6; }
+    body { font-family: system-ui, sans-serif; max-width: 920px; margin: 48px auto; padding: 0 20px; line-height: 1.6; }
     a { color: #2563eb; }
     .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
-    .card { border: 1px solid #d0d7de; border-radius: 12px; padding: 18px; }
+    .card { border: 1px solid #d0d7de; border-radius: 12px; padding: 22px; background: #fff; }
+    .muted { color: #667085; }
   </style>
 </head>
 <body>
   <h1>PTCG AI Battle Viewer</h1>
+  <p class="muted">カード一覧を見るか、公開リプレイを確認するかを選んでください。</p>
   <div class="cards">
     <section class="card">
       <h2>カード一覧</h2>

@@ -108,10 +108,16 @@
   #zoom-title{font-size:14px;font-weight:700;color:var(--accent);}
   .zoom-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(74px,1fr));gap:8px;
              justify-items:center;align-content:flex-start;flex:1;min-height:0;overflow:auto;}
+
+#viewer-home-nav{display:flex;gap:10px;align-items:center;font-size:12px;}
+#viewer-home-nav a{color:var(--accent);font-weight:700;text-decoration:none;}
+#viewer-home-nav a:hover{text-decoration:underline;}
 </style>
 </head>
 <body>
 <header>
+<nav id="viewer-home-nav"><a href="./">トップへ</a><span>/</span><a href="replays/">リプレイ一覧へ</a><span>/</span><a href="card_list.html">カード一覧へ</a></nav>
+
   <h1>PTCG Replay</h1>
   <button id="prev" data-i18n="prev">◀ 前へ</button>
   <input id="slider" type="range" min="0" max="0" value="0">

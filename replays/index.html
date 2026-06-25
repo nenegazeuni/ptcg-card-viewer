@@ -12,9 +12,17 @@
     details { border: 1px solid #d0d7de; border-radius: 12px; margin: 12px 0; padding: 8px 12px; }
     summary { cursor: pointer; font-weight: 700; }
     .submission { margin: 10px 0 0 18px; }
+    .viewer-nav { display: flex; gap: 10px; margin-bottom: 18px; }
+    .viewer-nav a { color: #2563eb; font-weight: 700; text-decoration: none; }
+    .viewer-nav a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
+  <nav class="viewer-nav">
+    <a href="../">トップへ</a>
+    <span>/</span>
+    <a href="../card_list.html">カード一覧を見る</a>
+  </nav>
   <h1>PTCG AI Battle Replays</h1>
   <p class="muted">Replay JSON は外部ストレージから読み込みます。</p>
   <div id="replays"></div>

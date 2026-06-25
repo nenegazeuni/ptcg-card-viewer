@@ -411,10 +411,29 @@
         padding-right: 12px;
       }
     }
+
+    .viewer-nav {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 10px;
+      font-size: 13px;
+    }
+    .viewer-nav a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 700;
+    }
+    .viewer-nav a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
   <header>
+  <nav class="viewer-nav">
+    <a href="./">トップへ</a>
+    <span>/</span>
+    <a href="replays/">リプレイを見る</a>
+  </nav>
     <div class="wrap">
       <h1>デッキ用カード一覧</h1>
       <p class="sub">JP_Card_Data.csv + EN_Card_Data.csv から生成。deck.csvはヘッダーなし60行のCard IDで出力します。</p>

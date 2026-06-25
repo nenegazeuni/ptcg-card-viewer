@@ -29,7 +29,7 @@
         return acc;
       }, {});
     }
-    fetch("manifest.json").then(r => r.json()).then(manifest => {
+    fetch(`manifest.json?ts=${Date.now()}`).then(r => r.json()).then(manifest => {
       const players = groupBy(manifest.items || [], "player");
       replays.innerHTML = Object.entries(players).map(([player, playerItems]) => {
         const submissions = groupBy(playerItems, "submission_id");

@@ -2,10 +2,28 @@
 <html lang="ja">
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="refresh" content="0; url=card_list.html">
-  <title>PTCG Card List Viewer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PTCG AI Battle Viewer</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 880px; margin: 40px auto; padding: 0 20px; line-height: 1.6; }
+    a { color: #2563eb; }
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+    .card { border: 1px solid #d0d7de; border-radius: 12px; padding: 18px; }
+  </style>
 </head>
 <body>
-  <p><a href="card_list.html">PTCG Card List Viewer</a></p>
+  <h1>PTCG AI Battle Viewer</h1>
+  <div class="cards">
+    <section class="card">
+      <h2>カード一覧</h2>
+      <p>検索・フィルタ・デッキビルド用のカードビューア。</p>
+      <p><a href="card_list.html">カード一覧を開く</a></p>
+    </section>
+    <section class="card">
+      <h2>リプレイ</h2>
+      <p>公開リプレイを日本語カード名で確認するビューア。</p>
+      <p><a href="replays/">リプレイ一覧を開く</a></p>
+    </section>
+  </div>
 </body>
 </html>

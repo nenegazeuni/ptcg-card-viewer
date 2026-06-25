@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PTCG Replay Viewer</title>
+  <style>
+    body { margin: 0; font-family: system-ui, sans-serif; background: #f6f8fb; color: #172033; }
+    header { position: sticky; top: 0; background: #fff; border-bottom: 1px solid #d0d7de; padding: 12px 18px; z-index: 1; }
+    main { padding: 18px; max-width: 1500px; margin: 0 auto; }
+    input[type=range] { width: 100%; }
+    button { padding: 7px 10px; border: 1px solid #d0d7de; background: #fff; border-radius: 8px; cursor: pointer; }
+    .controls { display: grid; grid-template-columns: 1fr auto auto auto; gap: 8px; align-items: center; }
+    .summary, .players { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; margin-bottom: 14px; }
+    .panel { background: #fff; border: 1px solid #d0d7de; border-radius: 12px; padding: 12px; }
+    .muted, .sub { color: #667085; font-size: 13px; }
+    .cards { display: flex; flex-wrap: wrap; gap: 8px; }
+    .card { min-width: 132px; max-width: 220px; border: 1px solid #d0d7de; border-radius: 10px; padding: 8px; background: #fbfcff; }
+    .name { font-weight: 700; }
+    .area-title { font-weight: 700; margin: 10px 0 6px; }
+    .chip { display: inline-block; border: 1px solid #d0d7de; border-radius: 999px; padding: 2px 7px; margin: 2px; font-size: 12px; color: #667085; }
+    .log-line { border-bottom: 1px dashed #d0d7de; padding: 5px 0; font: 12px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; white-space: pre-wrap; }
+    pre { overflow: auto; background: #0b1020; color: #d7e2ff; padding: 12px; border-radius: 10px; max-height: 360px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>PTCG Replay Viewer</h1>
+    <div id="source" class="muted"></div>
+    <div class="controls">
+      <input id="frame" type="range" min="0" max="0" value="0">
+      <button id="prev">前へ</button>
+      <button id="next">次へ</button>
+      <button id="play">再生</button>
+    </div>
+  </header>
+  <main>
+    <section id="summary" class="summary"></section>
+    <section id="players" class="players"></section>
+    <section class="panel"><h2>ログ</h2><div id="logs"></div></section>
+    <details><summary>現在フレームの JSON</summary><pre id="raw"></pre></details>
+  </main>
+  <script>
+    const areaNames = {1:"山札",2:"手札",3:"トラッシュ",4:"バトル場",5:"ベンチ",6:"サイド",7:"スタジアム",8:"エネルギー",9:"どうぐ",10:"進化前",11:"プレイヤー",12:"確認中"};
+    const contextNames = {0:"メイン選択",1:"最初のバトルポケモン",2:"最初のベンチポケモン",3:"入れ替え",4:"バトル場へ出す",5:"ベンチへ出す",6:"場に出す",7:"手札に加える",8:"トラッシュする",35:"ワザを選ぶ",37:"進化する",41:"先攻を選ぶ",42:"マリガン",43:"効果を使う"};
+    let cardNames = {};
+    let data = null;
+    let frames = [];
+    let timer = null;
+    const range = document.getElementById("frame");
+
+    function esc(value) {
+      return String(value ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+    }
+    function jp(card) {
+      if (!card) return card;
+      const id = card.id ?? card.cardId;
+      if (id != null && cardNames[String(id)]) {
+        card.nameEn = card.name;
+        card.name = cardNames[String(id)];
+      }
+      for (const key of ["energies", "tools", "deck", "hand", "discard", "prize", "active", "bench"]) {
+        if (Array.isArray(card[key])) card[key].forEach(jp);
+      }
+      return card;
+    }
+    function extractFrames(replay) {
+      for (const step of replay.steps || []) {
+        for (const entry of step || []) {
+          if (Array.isArray(entry.visualize) && entry.visualize.length) return entry.visualize;
+        }
+      }
+      return [];
+    }
+    function cardName(card) {
+      if (!card) return "-";
+      const serial = card.serial != null ? ` #${card.serial}` : "";
+      return `${card.name || card.cardId || card.id || "?"}${serial}`;
+    }
+    function cardHtml(card, compact=false) {
+      if (!card) return "";
+      const hp = card.hp != null && card.maxHp != null ? `<div class="sub">HP ${esc(card.hp)}/${esc(card.maxHp)}</div>` : "";
+      const attached = compact ? "" : `<div>${(card.energies || []).map(e => `<span class="chip">E: ${esc(cardName(e))}</span>`).join("")}${(card.tools || []).map(t => `<span class="chip">どうぐ: ${esc(cardName(t))}</span>`).join("")}</div>`;
+      return `<div class="card"><div class="name">${esc(cardName(card))}</div><div class="sub">ID: ${esc(card.id ?? card.cardId ?? "")}</div>${hp}${attached}</div>`;
+    }
+    function cardList(cards, compact=false, limit=30) {
+      cards = (cards || []).filter(Boolean);
+      if (!cards.length) return '<span class="muted">なし</span>';
+      const visible = cards.slice(0, limit).map(c => cardHtml(c, compact)).join("");
+      const rest = cards.length > limit ? `<span class="chip">ほか ${cards.length - limit} 枚</span>` : "";
+      return `<div class="cards">${visible}${rest}</div>`;
+    }
+    function playerHtml(player, index, turnPlayer) {
+      const team = (data.info?.TeamNames || data.info?.Agents || [])[index] || `Player ${index}`;
+      return `<article class="panel"><h2>${esc(team)} ${index === turnPlayer ? "（手番）" : ""}</h2>
+        <div class="muted">山札 ${esc(player.deckCount ?? (player.deck || []).length)} / 手札 ${esc(player.handCount ?? (player.hand || []).length)} / サイド ${esc((player.prize || []).length)}</div>
+        <div class="area-title">バトル場</div>${cardList(player.active)}
+        <div class="area-title">ベンチ</div>${cardList(player.bench)}
+        <div class="area-title">手札</div>${cardList(player.hand, true)}
+        <div class="area-title">トラッシュ</div>${cardList(player.discard, true)}
+      </article>`;
+    }
+    function describeSelect(sel) {
+      if (!sel) return "-";
+      return `${contextNames[sel.context] || sel.context} / options=${(sel.option || []).length}`;
+    }
+    function describeLog(log) {
+      if (!log || typeof log !== "object") return esc(JSON.stringify(log));
+      if (log.cardId != null && cardNames[String(log.cardId)]) log.name = cardNames[String(log.cardId)];
+      const parts = [];
+      if (log.playerIndex != null) parts.push(`P${log.playerIndex}`);
+      if (log.cardId != null) parts.push(log.name ? `${log.name}(${log.cardId})` : `card=${log.cardId}`);
+      if (log.fromArea != null || log.toArea != null) parts.push(`${areaNames[log.fromArea] || log.fromArea || "?"} -> ${areaNames[log.toArea] || log.toArea || "?"}`);
+      if (log.serial != null) parts.push(`#${log.serial}`);
+      return esc(parts.length ? parts.join("  ") : JSON.stringify(log));
+    }
+    function render(index) {
+      index = Math.max(0, Math.min(frames.length - 1, index));
+      range.value = index;
+      const frame = frames[index] || {};
+      jp(frame);
+      const current = frame.current || {};
+      const players = current.players || [];
+      document.getElementById("summary").innerHTML = [
+        ["フレーム", `${index + 1} / ${frames.length}`],
+        ["ターン", current.turn ?? "-"],
+        ["視点", current.yourIndex != null ? `Player ${current.yourIndex}` : "-"],
+        ["選択", describeSelect(frame.select)],
+        ["報酬", (data.rewards || []).join(" / ") || "-"],
+        ["状態", (data.statuses || []).join(" / ") || "-"],
+      ].map(([k, v]) => `<div class="panel"><div class="muted">${esc(k)}</div><strong>${esc(v)}</strong></div>`).join("");
+      document.getElementById("players").innerHTML = players.map((p, i) => playerHtml(p, i, current.turnPlayerIndex ?? current.yourIndex)).join("");
+      document.getElementById("logs").innerHTML = (frame.logs || []).length ? frame.logs.map(log => `<div class="log-line">${describeLog(log)}</div>`).join("") : '<div class="muted">ログなし</div>';
+      document.getElementById("raw").textContent = JSON.stringify(frame, null, 2);
+    }
+    async function main() {
+      const params = new URLSearchParams(location.search);
+      const replayUrl = params.get("replay");
+      if (!replayUrl) throw new Error("replay query parameter is required.");
+      document.getElementById("source").textContent = replayUrl;
+      [cardNames, data] = await Promise.all([
+        fetch("cards_jp.json").then(r => r.json()),
+        fetch(replayUrl).then(r => r.json()),
+      ]);
+      frames = extractFrames(data);
+      range.max = Math.max(0, frames.length - 1);
+      range.oninput = () => render(Number(range.value));
+      document.getElementById("prev").onclick = () => render(Number(range.value) - 1);
+      document.getElementById("next").onclick = () => render(Number(range.value) + 1);
+      document.getElementById("play").onclick = (event) => {
+        if (timer) { clearInterval(timer); timer = null; event.target.textContent = "再生"; return; }
+        event.target.textContent = "停止";
+        timer = setInterval(() => {
+          const next = Number(range.value) + 1;
+          if (next >= frames.length) { clearInterval(timer); timer = null; event.target.textContent = "再生"; }
+          else render(next);
+        }, 600);
+      };
+      render(0);
+    }
+    main().catch(error => {
+      document.querySelector("main").innerHTML = `<div class="panel"><h2>読み込みエラー</h2><pre>${esc(error.stack || error.message)}</pre></div>`;
+    });
+  </script>
+</body>
+</html>

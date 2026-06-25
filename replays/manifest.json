@@ -1,0 +1,636 @@
+{
+  "title": "PTCG AI Battle Replays",
+  "updated": null,
+  "items": [
+    {
+      "group": "submission",
+      "episode_id": "80632580",
+      "file_name": "episode-80632580-replay.json",
+      "size_bytes": 4364656,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80632580-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80633161",
+      "file_name": "episode-80633161-replay.json",
+      "size_bytes": 3871713,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80633161-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80633268",
+      "file_name": "episode-80633268-replay.json",
+      "size_bytes": 3333209,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80633268-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80633848",
+      "file_name": "episode-80633848-replay.json",
+      "size_bytes": 4670512,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80633848-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80634356",
+      "file_name": "episode-80634356-replay.json",
+      "size_bytes": 936373,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80634356-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80634840",
+      "file_name": "episode-80634840-replay.json",
+      "size_bytes": 4515854,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80634840-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80635604",
+      "file_name": "episode-80635604-replay.json",
+      "size_bytes": 4887536,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80635604-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80636006",
+      "file_name": "episode-80636006-replay.json",
+      "size_bytes": 4216318,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80636006-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80636495",
+      "file_name": "episode-80636495-replay.json",
+      "size_bytes": 772065,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80636495-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80636994",
+      "file_name": "episode-80636994-replay.json",
+      "size_bytes": 2599222,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80636994-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80637657",
+      "file_name": "episode-80637657-replay.json",
+      "size_bytes": 1731735,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80637657-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80638141",
+      "file_name": "episode-80638141-replay.json",
+      "size_bytes": 3938768,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80638141-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80638193",
+      "file_name": "episode-80638193-replay.json",
+      "size_bytes": 1584921,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80638193-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80638628",
+      "file_name": "episode-80638628-replay.json",
+      "size_bytes": 4022618,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80638628-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80639284",
+      "file_name": "episode-80639284-replay.json",
+      "size_bytes": 4049232,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80639284-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80639781",
+      "file_name": "episode-80639781-replay.json",
+      "size_bytes": 3748473,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80639781-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80640385",
+      "file_name": "episode-80640385-replay.json",
+      "size_bytes": 4726269,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80640385-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80641075",
+      "file_name": "episode-80641075-replay.json",
+      "size_bytes": 1376933,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80641075-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80641742",
+      "file_name": "episode-80641742-replay.json",
+      "size_bytes": 3985993,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80641742-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80642234",
+      "file_name": "episode-80642234-replay.json",
+      "size_bytes": 1559166,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80642234-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80642915",
+      "file_name": "episode-80642915-replay.json",
+      "size_bytes": 4322814,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80642915-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80643411",
+      "file_name": "episode-80643411-replay.json",
+      "size_bytes": 4808442,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80643411-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80643895",
+      "file_name": "episode-80643895-replay.json",
+      "size_bytes": 2082664,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80643895-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80644553",
+      "file_name": "episode-80644553-replay.json",
+      "size_bytes": 4363745,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80644553-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80645031",
+      "file_name": "episode-80645031-replay.json",
+      "size_bytes": 3023745,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80645031-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80645701",
+      "file_name": "episode-80645701-replay.json",
+      "size_bytes": 4376410,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80645701-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80646250",
+      "file_name": "episode-80646250-replay.json",
+      "size_bytes": 914866,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80646250-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80646845",
+      "file_name": "episode-80646845-replay.json",
+      "size_bytes": 4139414,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80646845-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80647320",
+      "file_name": "episode-80647320-replay.json",
+      "size_bytes": 7501894,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80647320-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80647808",
+      "file_name": "episode-80647808-replay.json",
+      "size_bytes": 4746555,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80647808-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80648301",
+      "file_name": "episode-80648301-replay.json",
+      "size_bytes": 5409696,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80648301-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80649001",
+      "file_name": "episode-80649001-replay.json",
+      "size_bytes": 1635145,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80649001-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80649451",
+      "file_name": "episode-80649451-replay.json",
+      "size_bytes": 1434293,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80649451-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80650697",
+      "file_name": "episode-80650697-replay.json",
+      "size_bytes": 4278039,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80650697-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80653070",
+      "file_name": "episode-80653070-replay.json",
+      "size_bytes": 4097140,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80653070-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80656879",
+      "file_name": "episode-80656879-replay.json",
+      "size_bytes": 424443,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80656879-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80664212",
+      "file_name": "episode-80664212-replay.json",
+      "size_bytes": 4236584,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80664212-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80665991",
+      "file_name": "episode-80665991-replay.json",
+      "size_bytes": 2252123,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80665991-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80685577",
+      "file_name": "episode-80685577-replay.json",
+      "size_bytes": 4313162,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80685577-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80691784",
+      "file_name": "episode-80691784-replay.json",
+      "size_bytes": 3047647,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80691784-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80704026",
+      "file_name": "episode-80704026-replay.json",
+      "size_bytes": 4142163,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80704026-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80714949",
+      "file_name": "episode-80714949-replay.json",
+      "size_bytes": 3201334,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80714949-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80718078",
+      "file_name": "episode-80718078-replay.json",
+      "size_bytes": 4742570,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80718078-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80729657",
+      "file_name": "episode-80729657-replay.json",
+      "size_bytes": 4209624,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80729657-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80734157",
+      "file_name": "episode-80734157-replay.json",
+      "size_bytes": 2628969,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80734157-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80734697",
+      "file_name": "episode-80734697-replay.json",
+      "size_bytes": 4453628,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80734697-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80735999",
+      "file_name": "episode-80735999-replay.json",
+      "size_bytes": 3819478,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80735999-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80737253",
+      "file_name": "episode-80737253-replay.json",
+      "size_bytes": 4067042,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80737253-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80740345",
+      "file_name": "episode-80740345-replay.json",
+      "size_bytes": 5057809,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80740345-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80747807",
+      "file_name": "episode-80747807-replay.json",
+      "size_bytes": 2258635,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80747807-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80753273",
+      "file_name": "episode-80753273-replay.json",
+      "size_bytes": 3971109,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80753273-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80755666",
+      "file_name": "episode-80755666-replay.json",
+      "size_bytes": 4378495,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80755666-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80762101",
+      "file_name": "episode-80762101-replay.json",
+      "size_bytes": 3950284,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80762101-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80762213",
+      "file_name": "episode-80762213-replay.json",
+      "size_bytes": 4651903,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80762213-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80763033",
+      "file_name": "episode-80763033-replay.json",
+      "size_bytes": 4509075,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80763033-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80782754",
+      "file_name": "episode-80782754-replay.json",
+      "size_bytes": 4316096,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80782754-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80783706",
+      "file_name": "episode-80783706-replay.json",
+      "size_bytes": 2628747,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80783706-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80792080",
+      "file_name": "episode-80792080-replay.json",
+      "size_bytes": 5746058,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80792080-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80798517",
+      "file_name": "episode-80798517-replay.json",
+      "size_bytes": 3181239,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80798517-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80802680",
+      "file_name": "episode-80802680-replay.json",
+      "size_bytes": 5854295,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80802680-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80804010",
+      "file_name": "episode-80804010-replay.json",
+      "size_bytes": 3576839,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80804010-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80806246",
+      "file_name": "episode-80806246-replay.json",
+      "size_bytes": 4614056,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80806246-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80817042",
+      "file_name": "episode-80817042-replay.json",
+      "size_bytes": 4222686,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80817042-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80844715",
+      "file_name": "episode-80844715-replay.json",
+      "size_bytes": 4896429,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80844715-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80849312",
+      "file_name": "episode-80849312-replay.json",
+      "size_bytes": 5053956,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80849312-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80856991",
+      "file_name": "episode-80856991-replay.json",
+      "size_bytes": 4367567,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80856991-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80865034",
+      "file_name": "episode-80865034-replay.json",
+      "size_bytes": 3031741,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80865034-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80867399",
+      "file_name": "episode-80867399-replay.json",
+      "size_bytes": 3969959,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80867399-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80878265",
+      "file_name": "episode-80878265-replay.json",
+      "size_bytes": 5516127,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80878265-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80892558",
+      "file_name": "episode-80892558-replay.json",
+      "size_bytes": 5057459,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80892558-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80900113",
+      "file_name": "episode-80900113-replay.json",
+      "size_bytes": 2810386,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80900113-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80928930",
+      "file_name": "episode-80928930-replay.json",
+      "size_bytes": 632089,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80928930-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80938884",
+      "file_name": "episode-80938884-replay.json",
+      "size_bytes": 3961839,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80938884-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80948155",
+      "file_name": "episode-80948155-replay.json",
+      "size_bytes": 4378068,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80948155-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80951376",
+      "file_name": "episode-80951376-replay.json",
+      "size_bytes": 3168608,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80951376-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80953758",
+      "file_name": "episode-80953758-replay.json",
+      "size_bytes": 857617,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80953758-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80963099",
+      "file_name": "episode-80963099-replay.json",
+      "size_bytes": 5523774,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80963099-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80963747",
+      "file_name": "episode-80963747-replay.json",
+      "size_bytes": 4163945,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80963747-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80974320",
+      "file_name": "episode-80974320-replay.json",
+      "size_bytes": 5010267,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80974320-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80982653",
+      "file_name": "episode-80982653-replay.json",
+      "size_bytes": 4283495,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80982653-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80985339",
+      "file_name": "episode-80985339-replay.json",
+      "size_bytes": 3828797,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80985339-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80986070",
+      "file_name": "episode-80986070-replay.json",
+      "size_bytes": 3108895,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80986070-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80996971",
+      "file_name": "episode-80996971-replay.json",
+      "size_bytes": 4916862,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80996971-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "80998046",
+      "file_name": "episode-80998046-replay.json",
+      "size_bytes": 1508933,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-80998046-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "81000884",
+      "file_name": "episode-81000884-replay.json",
+      "size_bytes": 4220529,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-81000884-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "81004127",
+      "file_name": "episode-81004127-replay.json",
+      "size_bytes": 3650709,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-81004127-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "81024384",
+      "file_name": "episode-81024384-replay.json",
+      "size_bytes": 4587693,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-81024384-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "81024415",
+      "file_name": "episode-81024415-replay.json",
+      "size_bytes": 3880627,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-81024415-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "81043986",
+      "file_name": "episode-81043986-replay.json",
+      "size_bytes": 4115376,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-81043986-replay.json"
+    },
+    {
+      "group": "submission",
+      "episode_id": "81045829",
+      "file_name": "episode-81045829-replay.json",
+      "size_bytes": 3497284,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/submission/episode-81045829-replay.json"
+    }
+  ]
+}

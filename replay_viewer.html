@@ -558,6 +558,7 @@ setLang(LANG);   // apply the current language to the static UI and set the togg
 
 // ---- ptcg-card-viewer integration: remote Kaggle replay + JP card names ----
 let __PTCG_JP_CARD_NAMES = null;
+let __PTCG_TEAM_NAMES = [];
 async function loadJpCardNames(){
   if(__PTCG_JP_CARD_NAMES) return __PTCG_JP_CARD_NAMES;
   try{
@@ -568,6 +569,25 @@ async function loadJpCardNames(){
     __PTCG_JP_CARD_NAMES = {};
   }
   return __PTCG_JP_CARD_NAMES;
+}
+function ptcgEscapeHtml(value){
+  return String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function playerLabel(index){
+  const name = __PTCG_TEAM_NAMES[index];
+  return name ? `P${index}: ${name}` : `P${index}`;
+}
+function playerLabelHtml(index){
+  return ptcgEscapeHtml(playerLabel(index));
+}
+function extractTeamNames(data){
+  const names = data?.info?.TeamNames;
+  if(Array.isArray(names) && names.length) return names.map(name => String(name));
+  const agents = data?.info?.Agents;
+  if(Array.isArray(agents) && agents.length){
+    return agents.map(agent => typeof agent === 'string' ? agent : String(agent?.Name || agent?.name || ''));
+  }
+  return [];
 }
 function localizeCardObject(obj, dict){
   if(!obj || typeof obj !== 'object') return;
@@ -591,12 +611,78 @@ function extractSnapshotsFromReplay(data){
   }
   throw new Error('visualize snapshot array was not found in replay JSON');
 }
+renderPlayer = function(el, ps, who, isTurn){
+  const st=statusOf(ps);
+  const playerIndex = who==='p0' ? 0 : 1;
+  const benchHtml = (ps.bench&&ps.bench.length)
+      ? ps.bench.map(b=>pokemonCard(b)).join('') : `<span class="hint">${T('noBench')}</span>`;
+  const handHtml = (ps.hand&&ps.hand.length)
+      ? ps.hand.map(c=>plainCard(c,true)).join('') : `<span class="hint">${T('noHand')}</span>`;
+  el.className='player '+who+(isTurn?' turn':'');
+  el.innerHTML=`
+    <div class="prow">
+      <span class="tag ${who}" title="${playerLabelHtml(playerIndex)}">${playerLabelHtml(playerIndex)}</span>
+      ${isTurn?`<span class="turnflag">${T('turnFlag')}</span>`:''}
+      <div class="counts">
+        <span>${T('deck')} <b>${ps.deckCount}</b></span>
+        <span>${T('hand')} <b>${ps.handCount}</b></span>
+        <span>${T('prize')} <b>${ps.prize?ps.prize.length:0}</b></span>
+        ${(ps.discard&&ps.discard.length)
+          ? `<span class="zone-open" data-pi="${playerIndex}" title="${T('clickDiscard')}">${T('discard')} <b>${ps.discard.length}</b></span>`
+          : `<span>${T('discard')} <b>0</b></span>`}
+      </div>
+    </div>
+    <div class="prow" style="align-items:flex-end">
+      <div>
+        <div class="zone-label">${T('battle')}</div>
+        <div class="cards">${(ps.active&&ps.active.length)?pokemonCard(ps.active[0],{active:true,status:st}):pokemonCard(null,{active:true})}</div>
+      </div>
+      <div style="flex:1">
+        <div class="zone-label">${T('bench')} (${ps.bench?ps.bench.length:0}/${ps.benchMax})</div>
+        <div class="cards">${benchHtml}</div>
+      </div>
+    </div>
+    <div class="zone-label">${T('hand')}</div>
+    <div class="cards">${handHtml}</div>`;
+};
+P = function(ev){ return ev.playerIndex!=null?playerLabel(ev.playerIndex):''; };
+render = function(){
+  const s=SNAP[idx], cur=s.current;
+  document.getElementById('slider').value=idx;
+  document.getElementById('stepno').textContent=`${idx+1}/${SNAP.length}`;
+  document.getElementById('turn').textContent=cur.turn;
+  document.getElementById('active').textContent=playerLabel(cur.yourIndex);
+  document.getElementById('ctx').textContent=(s.select&&s.select.context)||'-';
+  const res=document.getElementById('result');
+  res.innerHTML = cur.result>=0 ? `<b style="color:var(--hpgood)">RESULT: ${cur.result===2?T('draw'):T('win',playerLabel(cur.result))}</b>` : '';
+
+  renderPlayer(document.getElementById('panel1'), cur.players[1], 'p1', cur.yourIndex===1);
+  renderPlayer(document.getElementById('panel0'), cur.players[0], 'p0', cur.yourIndex===0);
+  const stad=document.getElementById('stadium');
+  if(cur.stadium&&cur.stadium.length){
+    const sc=cur.stadium[0];
+    stad.innerHTML=`🏟 ${T('stadium')}: <b>${sc.name||nm(sc.id)}</b>`;
+    stad.setAttribute('data-id', sc.id);
+  }else{
+    stad.innerHTML=`🏟 ${T('stadium')}: ${T('none2')}`;
+    stad.removeAttribute('data-id');
+  }
+
+  document.getElementById('selected').textContent=describeSelected(s);
+  document.getElementById('log').innerHTML=(s.logs||[]).map(decode).filter(x=>x!=null).join('
+');
+
+  document.getElementById('prev').disabled=idx===0;
+  document.getElementById('next').disabled=idx===SNAP.length-1;
+  if(zoomPi!==null) renderZoom();
+};
 const __PTCG_ORIGINAL_LOAD_TEXT = loadText;
 loadText = async function(text){
   let data;
   try{ data = JSON.parse(text); }catch(e){ alert('JSON parse error: '+e); return; }
   let snapshots;
   try{ snapshots = extractSnapshotsFromReplay(data); }catch(e){ alert(e.message); return; }
+  __PTCG_TEAM_NAMES = extractTeamNames(data);
   const dict = await loadJpCardNames();
   for(const snapshot of snapshots) localizeCardObject(snapshot, dict);
   __PTCG_ORIGINAL_LOAD_TEXT(JSON.stringify(snapshots));

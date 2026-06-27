@@ -669,8 +669,7 @@ render = function(){
   }
 
   document.getElementById('selected').textContent=describeSelected(s);
-  document.getElementById('log').innerHTML=(s.logs||[]).map(decode).filter(x=>x!=null).join('
-');
+  document.getElementById('log').innerHTML=(s.logs||[]).map(decode).filter(x=>x!=null).join('\n');
 
   document.getElementById('prev').disabled=idx===0;
   document.getElementById('next').disabled=idx===SNAP.length-1;

@@ -458,26 +458,45 @@ function renderPlayer(el, ps, who, isTurn){
 // ---- log decoding (string-typed events from visualize_data) ----
 function P(ev){ return ev.playerIndex!=null?('P'+ev.playerIndex):''; }
 function area(a){ return (I18N[LANG]||I18N.ja).area[a]||('area'+a); }
-function describeMove(p, card, fromArea, toArea, hidden=false){
+function describeMove(p, card, fromArea, toArea, hidden=false, sourceCard=null){
   if(LANG !== 'ja'){
     return hidden
       ? T('lMoveCardReverse',p,area(fromArea),area(toArea))
       : T('lMoveCard',p,card,area(fromArea),area(toArea));
   }
   const subject = hidden ? '非公開カード' : card;
+  const prefix = sourceCard ? `${sourceCard} の効果で ` : '';
   switch(toArea){
-    case 1: return `${p}: ${subject} を山札に戻した`;
-    case 2: return `${p}: ${subject} を手札に加えた`;
-    case 3: return `${p}: ${subject} をトラッシュに置いた`;
-    case 4: return `${p}: ${subject} をバトル場に出した`;
-    case 5: return `${p}: ${subject} をベンチに出した`;
-    case 6: return `${p}: ${subject} をサイドに置いた`;
-    case 7: return `${p}: ${subject} をスタジアムに出した`;
-    case 12: return `${p}: ${subject} を確認したカードに置いた`;
+    case 1: return `${p}: ${prefix}${subject} を山札に戻した`;
+    case 2: return `${p}: ${prefix}${subject} を手札に加えた`;
+    case 3: return `${p}: ${prefix}${subject} をトラッシュに置いた`;
+    case 4: return `${p}: ${prefix}${subject} をバトル場に出した`;
+    case 5: return `${p}: ${prefix}${subject} をベンチに出した`;
+    case 6: return `${p}: ${prefix}${subject} をサイドに置いた`;
+    case 7: return `${p}: ${prefix}${subject} をスタジアムに出した`;
+    case 12: return `${p}: ${prefix}${subject} を確認した`;
     default: return `${p}: ${subject} を ${area(fromArea)} から ${area(toArea)} へ移した`;
   }
 }
-function decode(ev){
+function shouldAnnotateMove(ev){
+  return ev?.type === 'MoveCard' && (
+    ev.fromArea === 12 || ev.toArea === 12 || (ev.fromArea === 1 && ev.toArea === 2)
+  );
+}
+function findEffectSource(frameIndex, logIndex, playerIndex){
+  for(let si=frameIndex; si>=0 && si>=frameIndex-8; si--){
+    const logs = SNAP[si]?.logs || [];
+    const start = si===frameIndex ? logIndex-1 : logs.length-1;
+    for(let li=start; li>=0; li--){
+      const ev = logs[li];
+      if(ev?.playerIndex !== playerIndex) continue;
+      if(ev.type === 'Play' || ev.type === 'Ability') return nm(ev.cardId);
+      if(ev.type === 'TurnStart' || ev.type === 'TurnEnd') return null;
+    }
+  }
+  return null;
+}
+function decode(ev, frameIndex=null, logIndex=null){
   const p=P(ev);
   switch(ev.type){
     case 'Shuffle': return T('lShuffle',p);
@@ -486,7 +505,12 @@ function decode(ev){
     case 'TurnEnd': return T('lTurnEnd',p);
     case 'Draw': return T('lDraw',p,nm(ev.cardId));
     case 'DrawReverse': return T('lDrawReverse',p);
-    case 'MoveCard': return describeMove(p,nm(ev.cardId),ev.fromArea,ev.toArea);
+    case 'MoveCard':{
+      const source = shouldAnnotateMove(ev) && frameIndex != null && logIndex != null
+        ? findEffectSource(frameIndex, logIndex, ev.playerIndex)
+        : null;
+      return describeMove(p,nm(ev.cardId),ev.fromArea,ev.toArea,false,source);
+    }
     case 'MoveCardReverse': return describeMove(p,null,ev.fromArea,ev.toArea,true);
     case 'Switch': return T('lSwitch',p,nm(ev.cardIdActive),nm(ev.cardIdBench));
     case 'Change': return T('lChange',p,nm(ev.cardIdBefore),nm(ev.cardIdAfter));
@@ -568,7 +592,7 @@ function render(){
   }
 
   document.getElementById('selected').textContent=describeSelected(s);
-  document.getElementById('log').innerHTML=(s.logs||[]).map(decode).filter(x=>x!=null).join('\n');
+  document.getElementById('log').innerHTML=(s.logs||[]).map((ev,i)=>decode(ev,idx,i)).filter(x=>x!=null).join('\n');
 
   document.getElementById('prev').disabled=idx===0;
   document.getElementById('next').disabled=idx===SNAP.length-1;
@@ -810,7 +834,7 @@ render = function(){
   }
 
   document.getElementById('selected').textContent=describeSelected(s);
-  document.getElementById('log').innerHTML=(s.logs||[]).map(decode).filter(x=>x!=null).join('\n');
+  document.getElementById('log').innerHTML=(s.logs||[]).map((ev,i)=>decode(ev,idx,i)).filter(x=>x!=null).join('\n');
 
   document.getElementById('prev').disabled=idx===0;
   document.getElementById('next').disabled=idx===SNAP.length-1;

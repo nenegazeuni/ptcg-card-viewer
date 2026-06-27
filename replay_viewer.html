@@ -266,7 +266,12 @@ function collectNames(cur){
   }
   for(const c of cur.stadium||[]) if(c&&c.name) names[c.id]=c.name;
 }
-function nm(id){ return (names[id]||'?')+'(#'+id+')'; }
+function nm(id){
+  const jp = (typeof __PTCG_JP_CARD_NAMES !== 'undefined' && __PTCG_JP_CARD_NAMES)
+    ? __PTCG_JP_CARD_NAMES[String(id)]
+    : null;
+  return (jp || names[id] || '?')+'(#'+id+')';
+}
 
 // ---- file pickers ----
 document.getElementById('file').addEventListener('change',e=>{

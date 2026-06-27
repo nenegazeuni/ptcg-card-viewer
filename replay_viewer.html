@@ -772,12 +772,19 @@ function describeOption(snapshot, optionIndex, option){
     }
   }
 }
-describeSelected = function(s){
-  if(!s.selected||!s.select) return '-';
+function selectedOptionIndexes(actionSnapshot){
+  const primary = actionSnapshot?.action?.[0];
+  if(Array.isArray(primary) && primary.length) return primary;
+  if(Array.isArray(actionSnapshot?.selected)) return actionSnapshot.selected;
+  return [];
+}
+describeSelected = function(s, actionSnapshot){
+  if(!s.select||!actionSnapshot) return '-';
   const opts=s.select.option||[];
-  const selected = s.selected.map(i => opts[i]).filter(Boolean);
+  const indexes = selectedOptionIndexes(actionSnapshot);
+  const selected = indexes.map(i => opts[i]).filter(Boolean);
   if(!selected.length) return `${selectTitle(s)} → -`;
-  const primary = describeOption(s, s.selected[0], selected[0]);
+  const primary = describeOption(s, indexes[0], selected[0]);
   const fallbackCount = selected.length - 1;
   const fallback = fallbackCount > 0 ? `（予備候補 ${fallbackCount}件）` : '';
   return `${selectTitle(s)} → ${primary}${fallback}`;
@@ -804,7 +811,7 @@ render = function(){
     stad.removeAttribute('data-id');
   }
 
-  document.getElementById('selected').textContent=describeSelected(s);
+  document.getElementById('selected').textContent=describeSelected(s, SNAP[idx+1]);
   document.getElementById('log').innerHTML=(s.logs||[]).map(decode).filter(x=>x!=null).join('\n');
 
   document.getElementById('prev').disabled=idx===0;

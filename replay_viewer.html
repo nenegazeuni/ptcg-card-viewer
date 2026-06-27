@@ -179,7 +179,7 @@ const I18N={
     none:'(なし)', facedown:'(裏)', tool:'道具', stadium:'スタジアム', none2:'なし',
     draw:'引分', win:p=>`P${p} 勝利`, notArray:'スナップショット配列ではありません',
     poisoned:'毒', burned:'やけど', asleep:'眠', paralyzed:'麻', confused:'混',
-    area:{1:'山札',2:'手札',3:'トラッシュ',4:'バトル場',5:'ベンチ',6:'サイド',7:'スタジアム',8:'エネ',9:'どうぐ',10:'進化元',11:'P',12:'確認中'},
+    area:{1:'山札',2:'手札',3:'トラッシュ',4:'バトル場',5:'ベンチ',6:'サイド',7:'スタジアム',8:'エネ',9:'どうぐ',10:'進化元',11:'P',12:'確認したカード'},
     reason:{1:'サイド0枚',2:'山札切れ',3:'場のポケモン全滅',4:'カード効果'},
     lShuffle:p=>`${p}: 山札シャッフル`, lMulligan:p=>`${p}: たねポケモンなし(マリガン)`,
     lTurnStart:p=>`\n--- ${p} ターン開始 ---`, lTurnEnd:p=>`--- ${p} ターン終了 ---`,
@@ -206,7 +206,7 @@ const I18N={
     none:'(none)', facedown:'(face down)', tool:'Tool', stadium:'Stadium', none2:'none',
     draw:'Draw', win:p=>`P${p} wins`, notArray:'Not a snapshot array',
     poisoned:'PSN', burned:'BRN', asleep:'SLP', paralyzed:'PAR', confused:'CNF',
-    area:{1:'Deck',2:'Hand',3:'Discard',4:'Active',5:'Bench',6:'Prize',7:'Stadium',8:'Energy',9:'Tool',10:'Pre-evo',11:'P',12:'Checking'},
+    area:{1:'Deck',2:'Hand',3:'Discard',4:'Active',5:'Bench',6:'Prize',7:'Stadium',8:'Energy',9:'Tool',10:'Pre-evo',11:'P',12:'Revealed cards'},
     reason:{1:'No prizes left',2:'Deck out',3:'No Pokémon in play',4:'Card effect'},
     lShuffle:p=>`${p}: shuffle deck`, lMulligan:p=>`${p}: no Basic Pokémon (mulligan)`,
     lTurnStart:p=>`\n--- ${p} turn start ---`, lTurnEnd:p=>`--- ${p} turn end ---`,
@@ -458,6 +458,25 @@ function renderPlayer(el, ps, who, isTurn){
 // ---- log decoding (string-typed events from visualize_data) ----
 function P(ev){ return ev.playerIndex!=null?('P'+ev.playerIndex):''; }
 function area(a){ return (I18N[LANG]||I18N.ja).area[a]||('area'+a); }
+function describeMove(p, card, fromArea, toArea, hidden=false){
+  if(LANG !== 'ja'){
+    return hidden
+      ? T('lMoveCardReverse',p,area(fromArea),area(toArea))
+      : T('lMoveCard',p,card,area(fromArea),area(toArea));
+  }
+  const subject = hidden ? '非公開カード' : card;
+  switch(toArea){
+    case 1: return `${p}: ${subject} を山札に戻した`;
+    case 2: return `${p}: ${subject} を手札に加えた`;
+    case 3: return `${p}: ${subject} をトラッシュに置いた`;
+    case 4: return `${p}: ${subject} をバトル場に出した`;
+    case 5: return `${p}: ${subject} をベンチに出した`;
+    case 6: return `${p}: ${subject} をサイドに置いた`;
+    case 7: return `${p}: ${subject} をスタジアムに出した`;
+    case 12: return `${p}: ${subject} を確認したカードに置いた`;
+    default: return `${p}: ${subject} を ${area(fromArea)} から ${area(toArea)} へ移した`;
+  }
+}
 function decode(ev){
   const p=P(ev);
   switch(ev.type){
@@ -467,8 +486,8 @@ function decode(ev){
     case 'TurnEnd': return T('lTurnEnd',p);
     case 'Draw': return T('lDraw',p,nm(ev.cardId));
     case 'DrawReverse': return T('lDrawReverse',p);
-    case 'MoveCard': return T('lMoveCard',p,nm(ev.cardId),area(ev.fromArea),area(ev.toArea));
-    case 'MoveCardReverse': return T('lMoveCardReverse',p,area(ev.fromArea),area(ev.toArea));
+    case 'MoveCard': return describeMove(p,nm(ev.cardId),ev.fromArea,ev.toArea);
+    case 'MoveCardReverse': return describeMove(p,null,ev.fromArea,ev.toArea,true);
     case 'Switch': return T('lSwitch',p,nm(ev.cardIdActive),nm(ev.cardIdBench));
     case 'Change': return T('lChange',p,nm(ev.cardIdBefore),nm(ev.cardIdAfter));
     case 'Play': return T('lPlay',p,nm(ev.cardId));

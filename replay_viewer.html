@@ -140,7 +140,7 @@
   </div>
   <div class="side">
     <div class="selbox">
-      <h3 data-i18n="selectedTitle">この場面で選ばれた操作</h3>
+      <h3 data-i18n="selectedTitle">この手で選んだアクション</h3>
       <div class="sel" id="selected">-</div>
     </div>
     <div class="logbox">
@@ -172,14 +172,14 @@ const I18N={
     prev:'◀ 前へ', next:'次へ ▶', step:'手数', turn:'ターン', active:'手番', ctx:'ctx', openFile:'ファイルを開く',
     dropTitle:'リプレイ JSON をドロップ', or:'または', chooseFile:'ファイルを選択',
     dropHint:'<code>visualize_data()</code> が出力したリプレイ JSON を読み込みます',
-    selectedTitle:'この場面で選ばれた操作', logTitle:'ログ（この選択まで）',
+    selectedTitle:'この手で選んだアクション', logTitle:'ログ（この選択まで）',
     close:'✕ 閉じる', discardEmpty:'（トラッシュは空です）', discardTitle:(p,c)=>`P${p} トラッシュ（${c}枚）`,
     deck:'山札', hand:'手札', prize:'サイド', discard:'トラッシュ', turnFlag:'▶ 手番',
     battle:'バトル場', bench:'ベンチ', noBench:'（ベンチなし）', noHand:'（手札なし）', clickDiscard:'クリックでトラッシュ一覧',
     none:'(なし)', facedown:'(裏)', tool:'道具', stadium:'スタジアム', none2:'なし',
     draw:'引分', win:p=>`P${p} 勝利`, notArray:'スナップショット配列ではありません',
     poisoned:'毒', burned:'やけど', asleep:'眠', paralyzed:'麻', confused:'混',
-    area:{1:'山札',2:'手札',3:'トラッシュ',4:'バトル場',5:'ベンチ',6:'サイド',7:'スタジアム',8:'エネ',9:'どうぐ',10:'進化元',11:'P',12:'確認したカード'},
+    area:{1:'山札',2:'手札',3:'トラッシュ',4:'バトル場',5:'ベンチ',6:'サイド',7:'スタジアム',8:'エネ',9:'どうぐ',10:'進化元',11:'P',12:'確認中'},
     reason:{1:'サイド0枚',2:'山札切れ',3:'場のポケモン全滅',4:'カード効果'},
     lShuffle:p=>`${p}: 山札シャッフル`, lMulligan:p=>`${p}: たねポケモンなし(マリガン)`,
     lTurnStart:p=>`\n--- ${p} ターン開始 ---`, lTurnEnd:p=>`--- ${p} ターン終了 ---`,
@@ -199,14 +199,14 @@ const I18N={
     prev:'◀ Prev', next:'Next ▶', step:'step', turn:'turn', active:'active', ctx:'ctx', openFile:'Open file',
     dropTitle:'Drop replay JSON', or:'or', chooseFile:'Choose file',
     dropHint:'Loads a replay JSON produced by <code>visualize_data()</code>',
-    selectedTitle:'Chosen action', logTitle:'Log (up to this choice)',
+    selectedTitle:'Selected action (this step)', logTitle:'Log (up to this choice)',
     close:'✕ Close', discardEmpty:'(discard is empty)', discardTitle:(p,c)=>`P${p} Discard (${c})`,
     deck:'Deck', hand:'Hand', prize:'Prize', discard:'Discard', turnFlag:'▶ Turn',
     battle:'Active', bench:'Bench', noBench:'(no bench)', noHand:'(no hand)', clickDiscard:'Click to view discard',
     none:'(none)', facedown:'(face down)', tool:'Tool', stadium:'Stadium', none2:'none',
     draw:'Draw', win:p=>`P${p} wins`, notArray:'Not a snapshot array',
     poisoned:'PSN', burned:'BRN', asleep:'SLP', paralyzed:'PAR', confused:'CNF',
-    area:{1:'Deck',2:'Hand',3:'Discard',4:'Active',5:'Bench',6:'Prize',7:'Stadium',8:'Energy',9:'Tool',10:'Pre-evo',11:'P',12:'Revealed cards'},
+    area:{1:'Deck',2:'Hand',3:'Discard',4:'Active',5:'Bench',6:'Prize',7:'Stadium',8:'Energy',9:'Tool',10:'Pre-evo',11:'P',12:'Checking'},
     reason:{1:'No prizes left',2:'Deck out',3:'No Pokémon in play',4:'Card effect'},
     lShuffle:p=>`${p}: shuffle deck`, lMulligan:p=>`${p}: no Basic Pokémon (mulligan)`,
     lTurnStart:p=>`\n--- ${p} turn start ---`, lTurnEnd:p=>`--- ${p} turn end ---`,
@@ -266,12 +266,7 @@ function collectNames(cur){
   }
   for(const c of cur.stadium||[]) if(c&&c.name) names[c.id]=c.name;
 }
-function nm(id){
-  const jp = (typeof __PTCG_JP_CARD_NAMES !== 'undefined' && __PTCG_JP_CARD_NAMES)
-    ? __PTCG_JP_CARD_NAMES[String(id)]
-    : null;
-  return (jp || names[id] || '?')+'(#'+id+')';
-}
+function nm(id){ return (names[id]||'?')+'(#'+id+')'; }
 
 // ---- file pickers ----
 document.getElementById('file').addEventListener('change',e=>{
@@ -458,45 +453,7 @@ function renderPlayer(el, ps, who, isTurn){
 // ---- log decoding (string-typed events from visualize_data) ----
 function P(ev){ return ev.playerIndex!=null?('P'+ev.playerIndex):''; }
 function area(a){ return (I18N[LANG]||I18N.ja).area[a]||('area'+a); }
-function describeMove(p, card, fromArea, toArea, hidden=false, sourceCard=null){
-  if(LANG !== 'ja'){
-    return hidden
-      ? T('lMoveCardReverse',p,area(fromArea),area(toArea))
-      : T('lMoveCard',p,card,area(fromArea),area(toArea));
-  }
-  const subject = hidden ? '非公開カード' : card;
-  const prefix = sourceCard ? `${sourceCard} の効果で ` : '';
-  switch(toArea){
-    case 1: return `${p}: ${prefix}${subject} を山札に戻した`;
-    case 2: return `${p}: ${prefix}${subject} を手札に加えた`;
-    case 3: return `${p}: ${prefix}${subject} をトラッシュに置いた`;
-    case 4: return `${p}: ${prefix}${subject} をバトル場に出した`;
-    case 5: return `${p}: ${prefix}${subject} をベンチに出した`;
-    case 6: return `${p}: ${prefix}${subject} をサイドに置いた`;
-    case 7: return `${p}: ${prefix}${subject} をスタジアムに出した`;
-    case 12: return `${p}: ${prefix}${subject} を確認した`;
-    default: return `${p}: ${subject} を ${area(fromArea)} から ${area(toArea)} へ移した`;
-  }
-}
-function shouldAnnotateMove(ev){
-  return ev?.type === 'MoveCard' && (
-    ev.fromArea === 12 || ev.toArea === 12 || (ev.fromArea === 1 && ev.toArea === 2)
-  );
-}
-function findEffectSource(frameIndex, logIndex, playerIndex){
-  for(let si=frameIndex; si>=0 && si>=frameIndex-8; si--){
-    const logs = SNAP[si]?.logs || [];
-    const start = si===frameIndex ? logIndex-1 : logs.length-1;
-    for(let li=start; li>=0; li--){
-      const ev = logs[li];
-      if(ev?.playerIndex !== playerIndex) continue;
-      if(ev.type === 'Play' || ev.type === 'Ability') return nm(ev.cardId);
-      if(ev.type === 'TurnStart' || ev.type === 'TurnEnd') return null;
-    }
-  }
-  return null;
-}
-function decode(ev, frameIndex=null, logIndex=null){
+function decode(ev){
   const p=P(ev);
   switch(ev.type){
     case 'Shuffle': return T('lShuffle',p);
@@ -505,13 +462,8 @@ function decode(ev, frameIndex=null, logIndex=null){
     case 'TurnEnd': return T('lTurnEnd',p);
     case 'Draw': return T('lDraw',p,nm(ev.cardId));
     case 'DrawReverse': return T('lDrawReverse',p);
-    case 'MoveCard':{
-      const source = shouldAnnotateMove(ev) && frameIndex != null && logIndex != null
-        ? findEffectSource(frameIndex, logIndex, ev.playerIndex)
-        : null;
-      return describeMove(p,nm(ev.cardId),ev.fromArea,ev.toArea,false,source);
-    }
-    case 'MoveCardReverse': return describeMove(p,null,ev.fromArea,ev.toArea,true);
+    case 'MoveCard': return T('lMoveCard',p,nm(ev.cardId),area(ev.fromArea),area(ev.toArea));
+    case 'MoveCardReverse': return T('lMoveCardReverse',p,area(ev.fromArea),area(ev.toArea));
     case 'Switch': return T('lSwitch',p,nm(ev.cardIdActive),nm(ev.cardIdBench));
     case 'Change': return T('lChange',p,nm(ev.cardIdBefore),nm(ev.cardIdAfter));
     case 'Play': return T('lPlay',p,nm(ev.cardId));
@@ -592,7 +544,7 @@ function render(){
   }
 
   document.getElementById('selected').textContent=describeSelected(s);
-  document.getElementById('log').innerHTML=(s.logs||[]).map((ev,i)=>decode(ev,idx,i)).filter(x=>x!=null).join('\n');
+  document.getElementById('log').innerHTML=(s.logs||[]).map(decode).filter(x=>x!=null).join('\n');
 
   document.getElementById('prev').disabled=idx===0;
   document.getElementById('next').disabled=idx===SNAP.length-1;
@@ -694,130 +646,13 @@ renderPlayer = function(el, ps, who, isTurn){
     <div class="cards">${handHtml}</div>`;
 };
 P = function(ev){ return ev.playerIndex!=null?playerLabel(ev.playerIndex):''; };
-function playerName(index){
-  return __PTCG_TEAM_NAMES[index] || `P${index}`;
-}
-function selectActionName(select){
-  if(!select) return '-';
-  const type = select.type;
-  const context = select.context;
-  if(type === 'Main' && context === 'Main') return 'メイン行動';
-  if(type === 'YesNo' && context === 'Mulligan') return 'マリガン確認';
-  if(context === 'InitialPokemon') return '最初のポケモン選択';
-  if(context === 'PokemonCheck') return 'ポケモン確認';
-  if(context === 'Trainer') return 'トレーナーズ処理';
-  if(context === 'Attack') return 'ワザ処理';
-  return [type, context].filter(Boolean).join(' / ') || '-';
-}
-function selectTitle(snapshot){
-  const index = snapshot.current?.yourIndex ?? 0;
-  return `${playerName(index)} / ${selectActionName(snapshot.select)}`;
-}
-function cardDisplayName(card){
-  if(!card) return null;
-  return card.name || nm(card.id ?? card.cardId);
-}
-function cardsForArea(snapshot, areaId, playerIndex){
-  const cur = snapshot.current || {};
-  const player = (cur.players || [])[playerIndex];
-  switch(areaId){
-    case 1: return snapshot.select?.deck || [];
-    case 2: return player?.hand || [];
-    case 3: return player?.discard || [];
-    case 4: return player?.active || [];
-    case 5: return player?.bench || [];
-    case 6: return player?.prize || [];
-    case 7: return cur.stadium || [];
-    case 12: return cur.looking || [];
-    default: return [];
-  }
-}
-function cardAtArea(snapshot, areaId, index, playerIndex){
-  if(index == null) return null;
-  const cards = cardsForArea(snapshot, areaId, playerIndex);
-  return cards[index] || null;
-}
-function describeAreaCard(snapshot, areaId, index, playerIndex){
-  const card = cardAtArea(snapshot, areaId, index, playerIndex);
-  const name = cardDisplayName(card);
-  const place = `${area(areaId)}${index != null ? index + 1 : ''}`;
-  return name ? `${name}（${place}）` : `${place}`;
-}
-function describeInPlayCard(snapshot, areaId, index, playerIndex){
-  const card = cardAtArea(snapshot, areaId, index, playerIndex);
-  const name = cardDisplayName(card);
-  const place = `${area(areaId)}${index != null ? index + 1 : ''}`;
-  return name ? `${name}（${place}）` : `${place}`;
-}
-function optionExtra(o){
-  const fields = [];
-  for(const f of ['attackId','cardId','number']){
-    if(o[f] != null) fields.push(`${f}=${o[f]}`);
-  }
-  return fields.length ? ` ${fields.join(' ')}` : '';
-}
-function describeOption(snapshot, optionIndex, option){
-  const playerIndex = option.playerIndex ?? snapshot.current?.yourIndex ?? 0;
-  const actor = playerLabel(playerIndex);
-  const source = option.area != null
-    ? describeAreaCard(snapshot, option.area, option.index, playerIndex)
-    : null;
-  const target = option.inPlayArea != null
-    ? describeInPlayCard(snapshot, option.inPlayArea, option.inPlayIndex, playerIndex)
-    : null;
-  switch(option.type){
-    case 'Attach':
-      return `[${optionIndex}] ${actor}: ${source || 'カード'} を ${target || 'ポケモン'} に付ける`;
-    case 'Evolve':
-      return `[${optionIndex}] ${actor}: ${source || 'カード'} で ${target || 'ポケモン'} を進化`;
-    case 'Ability':
-      return `[${optionIndex}] ${actor}: ${(target || source || 'ポケモン')} の特性を使う${optionExtra(option)}`;
-    case 'Attack':
-      return `[${optionIndex}] ${actor}: ${(target || source || 'ポケモン')} でワザを使う${optionExtra(option)}`;
-    case 'Energy':
-      return `[${optionIndex}] ${actor}: ${(target || source || area(option.area))} のエネルギーを選択${optionExtra(option)}`;
-    case 'Card':
-      return `[${optionIndex}] ${actor}: ${source || 'カード'} を選択${optionExtra(option)}`;
-    case 'Yes':
-    case 'No':
-      return `[${optionIndex}] ${option.type}`;
-    default:{
-      const raw = [];
-      for(const f of ['index','area','inPlayArea','inPlayIndex','attackId','cardId','number']){
-        if(option[f] != null) raw.push(`${f}=${option[f]}`);
-      }
-      return `[${optionIndex}] ${option.type}${raw.length ? ' ' + raw.join(' ') : ''}`;
-    }
-  }
-}
-describeSelected = function(s){
-  if(!s.selected||!s.select) return '-';
-  const opts=s.select.option||[];
-  const parts=s.selected.map(i=>{
-    const o=opts[i]; if(!o) return `#${i}`;
-    return describeOption(s, i, o);
-  });
-  return `${selectTitle(s)} → ${parts.join(' , ')}`;
-};
-pinHeaderWidths = function(){
-  const ctxLabels=new Set(['-']);
-  let maxTurn=0;
-  for(const s of SNAP){
-    ctxLabels.add(selectActionName(s.select));
-    const t=s.current&&s.current.turn;
-    if(typeof t==='number'&&t>maxTurn) maxTurn=t;
-  }
-  measureMax(document.getElementById('ctx'), [...ctxLabels]);
-  measureMax(document.getElementById('stepno'), [SNAP.length+'/'+SNAP.length]);
-  measureMax(document.getElementById('turn'), ['-', String(maxTurn||1)]);
-};
 render = function(){
   const s=SNAP[idx], cur=s.current;
   document.getElementById('slider').value=idx;
   document.getElementById('stepno').textContent=`${idx+1}/${SNAP.length}`;
   document.getElementById('turn').textContent=cur.turn;
   document.getElementById('active').textContent=playerLabel(cur.yourIndex);
-  document.getElementById('ctx').textContent=selectActionName(s.select);
+  document.getElementById('ctx').textContent=(s.select&&s.select.context)||'-';
   const res=document.getElementById('result');
   res.innerHTML = cur.result>=0 ? `<b style="color:var(--hpgood)">RESULT: ${cur.result===2?T('draw'):T('win',playerLabel(cur.result))}</b>` : '';
 
@@ -834,7 +669,7 @@ render = function(){
   }
 
   document.getElementById('selected').textContent=describeSelected(s);
-  document.getElementById('log').innerHTML=(s.logs||[]).map((ev,i)=>decode(ev,idx,i)).filter(x=>x!=null).join('\n');
+  document.getElementById('log').innerHTML=(s.logs||[]).map(decode).filter(x=>x!=null).join('\n');
 
   document.getElementById('prev').disabled=idx===0;
   document.getElementById('next').disabled=idx===SNAP.length-1;

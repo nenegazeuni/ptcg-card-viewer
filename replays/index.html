@@ -30,6 +30,26 @@
     const pagesUrl = "https://nenegazeuni.github.io/ptcg-card-viewer/";
     const replays = document.getElementById("replays");
     const fmt = new Intl.NumberFormat("ja-JP", { maximumFractionDigits: 1 });
+    const dateFmt = new Intl.DateTimeFormat("ja-JP", {
+      dateStyle: "short",
+      timeStyle: "short",
+      hour12: false,
+      timeZone: "Asia/Tokyo",
+    });
+    function parseTime(value) {
+      if (!value) return null;
+      const iso = value.includes("T") ? value : value.replace(" ", "T") + "Z";
+      const date = new Date(iso);
+      return Number.isNaN(date.getTime()) ? null : date;
+    }
+    function formatTime(value) {
+      const date = parseTime(value);
+      return date ? `${dateFmt.format(date)} JST` : "-";
+    }
+    function latestEpisodeTime(items) {
+      const values = items.map(item => item.episode_create_time).filter(Boolean).sort();
+      return values.length ? values[values.length - 1] : "";
+    }
     function groupBy(items, key) {
       return items.reduce((acc, item) => {
         const value = item[key] || "unknown";
@@ -47,15 +67,17 @@
             const mb = fmt.format((item.size_bytes || 0) / 1000000);
             return `<tr>
               <td>${item.episode_id}</td>
+              <td>${formatTime(item.episode_create_time)}</td>
               <td>${item.opponent || "-"}</td>
               <td>${mb} MB</td>
               <td><a href="${viewer}">開く</a></td>
             </tr>`;
           }).join("");
+          const submittedAt = formatTime(latestEpisodeTime(items));
           return `<details class="submission" open>
-            <summary>submission ${submissionId}（${items.length} replays）</summary>
+            <summary>submission ${submissionId} / ${submittedAt}（${items.length} replays）</summary>
             <table>
-              <thead><tr><th>Episode</th><th>Opponent</th><th>Size</th><th>Viewer</th></tr></thead>
+              <thead><tr><th>Episode</th><th>Time</th><th>Opponent</th><th>Size</th><th>Viewer</th></tr></thead>
               <tbody>${rows}</tbody>
             </table>
           </details>`;

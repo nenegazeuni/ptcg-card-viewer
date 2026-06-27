@@ -12,6 +12,11 @@
     details { border: 1px solid #d0d7de; border-radius: 12px; margin: 12px 0; padding: 8px 12px; }
     summary { cursor: pointer; font-weight: 700; }
     .submission { margin: 10px 0 0 18px; }
+    .result { font-weight: 700; }
+    .result-win { color: #15803d; }
+    .result-loss { color: #b91c1c; }
+    .result-draw { color: #92400e; }
+    .result-unknown { color: #667085; }
     .viewer-nav { display: flex; gap: 10px; margin-bottom: 18px; }
     .viewer-nav a { color: #2563eb; font-weight: 700; text-decoration: none; }
     .viewer-nav a:hover { text-decoration: underline; }
@@ -50,6 +55,33 @@
       const values = items.map(item => item.episode_create_time).filter(Boolean).sort();
       return values.length ? values[values.length - 1] : "";
     }
+    function escapeHtml(value) {
+      return String(value ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+    }
+    function resultLabel(result) {
+      if (result === "win") return "勝ち";
+      if (result === "loss") return "負け";
+      if (result === "draw") return "引き分け";
+      return "-";
+    }
+    function resultHtml(item) {
+      const result = item.player_result || "unknown";
+      const label = resultLabel(result);
+      const title = item.winner && item.winner !== "draw" ? `勝者: ${item.winner}` : "";
+      return `<span class="result result-${escapeHtml(result)}" title="${escapeHtml(title)}">${escapeHtml(label)}</span>`;
+    }
+    function resultSummary(items) {
+      const counts = items.reduce((acc, item) => {
+        acc[item.player_result || "unknown"] = (acc[item.player_result || "unknown"] || 0) + 1;
+        return acc;
+      }, {});
+      const parts = [];
+      if (counts.win) parts.push(`勝ち${counts.win}`);
+      if (counts.loss) parts.push(`負け${counts.loss}`);
+      if (counts.draw) parts.push(`引き分け${counts.draw}`);
+      if (counts.unknown) parts.push(`不明${counts.unknown}`);
+      return parts.length ? parts.join(" / ") : "結果なし";
+    }
     function groupBy(items, key) {
       return items.reduce((acc, item) => {
         const value = item[key] || "unknown";
@@ -68,16 +100,18 @@
             return `<tr>
               <td>${item.episode_id}</td>
               <td>${formatTime(item.episode_create_time)}</td>
+              <td>${resultHtml(item)}</td>
               <td>${item.opponent || "-"}</td>
               <td>${mb} MB</td>
               <td><a href="${viewer}">開く</a></td>
             </tr>`;
           }).join("");
           const submittedAt = formatTime(latestEpisodeTime(items));
+          const results = resultSummary(items);
           return `<details class="submission" open>
-            <summary>submission ${submissionId} / ${submittedAt}（${items.length} replays）</summary>
+            <summary>submission ${submissionId} / ${submittedAt} / ${results}（${items.length} replays）</summary>
             <table>
-              <thead><tr><th>Episode</th><th>Time</th><th>Opponent</th><th>Size</th><th>Viewer</th></tr></thead>
+              <thead><tr><th>Episode</th><th>Time</th><th>Result</th><th>Opponent</th><th>Size</th><th>Viewer</th></tr></thead>
               <tbody>${rows}</tbody>
             </table>
           </details>`;

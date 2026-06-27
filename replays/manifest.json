@@ -13,7 +13,11 @@
       "size_bytes": 3415942,
       "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/ei1333/53969201/episode-81783354-replay.json",
       "episode_create_time": "2026-06-25 06:53:00.256000",
-      "episode_end_time": "2026-06-25 06:55:29.537000"
+      "episode_end_time": "2026-06-25 06:55:29.537000",
+      "player_index": 1,
+      "player_result": "loss",
+      "player_reward": -1,
+      "winner": "miyajiyuta"
     },
     {
       "group": "submission",
@@ -26,7 +30,11 @@
       "size_bytes": 852120,
       "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/ei1333/53969201/episode-81794689-replay.json",
       "episode_create_time": "2026-06-25 08:21:04.064000",
-      "episode_end_time": "2026-06-25 08:23:12.466000"
+      "episode_end_time": "2026-06-25 08:23:12.466000",
+      "player_index": 1,
+      "player_result": "win",
+      "player_reward": 1,
+      "winner": "ei1333"
     },
     {
       "group": "submission",
@@ -39,7 +47,11 @@
       "size_bytes": 3566435,
       "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/ei1333/53969201/episode-81802624-replay.json",
       "episode_create_time": "2026-06-25 09:25:00.389000",
-      "episode_end_time": "2026-06-25 09:27:07.250000"
+      "episode_end_time": "2026-06-25 09:27:07.250000",
+      "player_index": 0,
+      "player_result": "win",
+      "player_reward": 1,
+      "winner": "ei1333"
     },
     {
       "group": "submission",
@@ -52,7 +64,11 @@
       "size_bytes": 796180,
       "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/ei1333/53969201/episode-81822516-replay.json",
       "episode_create_time": "2026-06-25 11:57:00.176000",
-      "episode_end_time": "2026-06-25 11:59:10.585000"
+      "episode_end_time": "2026-06-25 11:59:10.585000",
+      "player_index": 0,
+      "player_result": "win",
+      "player_reward": 1,
+      "winner": "ei1333"
     },
     {
       "group": "submission",
@@ -65,7 +81,11 @@
       "size_bytes": 2942654,
       "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/ei1333/53969201/episode-81825914-replay.json",
       "episode_create_time": "2026-06-25 12:21:36.122000",
-      "episode_end_time": "2026-06-25 12:23:46.069000"
+      "episode_end_time": "2026-06-25 12:23:46.069000",
+      "player_index": 1,
+      "player_result": "win",
+      "player_reward": 1,
+      "winner": "ei1333"
     },
     {
       "group": "submission",
@@ -78,7 +98,11 @@
       "size_bytes": 3105404,
       "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/ei1333/53969201/episode-81839572-replay.json",
       "episode_create_time": "2026-06-25 14:01:32.008000",
-      "episode_end_time": "2026-06-25 14:03:46.111000"
+      "episode_end_time": "2026-06-25 14:03:46.111000",
+      "player_index": 1,
+      "player_result": "loss",
+      "player_reward": -1,
+      "winner": "Hi Im Ryo"
     },
     {
       "group": "submission",
@@ -91,7 +115,11 @@
       "size_bytes": 1543739,
       "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/ei1333/53969201/episode-81844585-replay.json",
       "episode_create_time": "2026-06-25 14:41:31.031000",
-      "episode_end_time": "2026-06-25 14:43:59.509000"
+      "episode_end_time": "2026-06-25 14:43:59.509000",
+      "player_index": 1,
+      "player_result": "loss",
+      "player_reward": -1,
+      "winner": "YU YAUCHI"
     },
     {
       "group": "submission",
@@ -104,7 +132,11 @@
       "size_bytes": 4786422,
       "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/ei1333/53969201/episode-81856232-replay.json",
       "episode_create_time": "2026-06-25 16:05:33.081000",
-      "episode_end_time": "2026-06-25 16:07:53.134000"
+      "episode_end_time": "2026-06-25 16:07:53.134000",
+      "player_index": 1,
+      "player_result": "loss",
+      "player_reward": -1,
+      "winner": "koucha"
     },
     {
       "group": "submission",
@@ -117,7 +149,11 @@
       "size_bytes": 3180131,
       "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/ei1333/53969201/episode-81857237-replay.json",
       "episode_create_time": "2026-06-25 16:13:33.107000",
-      "episode_end_time": "2026-06-25 16:15:59.321000"
+      "episode_end_time": "2026-06-25 16:15:59.321000",
+      "player_index": 1,
+      "player_result": "loss",
+      "player_reward": -1,
+      "winner": "kaerururu"
     },
     {
       "group": "submission",
@@ -130,7 +166,11 @@
       "size_bytes": 665529,
       "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/ei1333/53969201/episode-81857312-replay.json",
       "episode_create_time": "2026-06-25 16:13:33.226000",
-      "episode_end_time": "2026-06-25 16:15:48.943000"
+      "episode_end_time": "2026-06-25 16:15:48.943000",
+      "player_index": 0,
+      "player_result": "loss",
+      "player_reward": -1,
+      "winner": "おやつパンダ"
     },
     {
       "group": "submission",
@@ -143,7 +183,11 @@
       "size_bytes": 4660977,
       "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/ei1333/54047084/episode-81858576-replay.json",
       "episode_create_time": "2026-06-25 16:21:33.201000",
-      "episode_end_time": "2026-06-25 16:23:43.127000"
+      "episode_end_time": "2026-06-25 16:23:43.127000",
+      "player_index": null,
+      "player_result": "",
+      "player_reward": null,
+      "winner": "ei1333"
     },
     {
       "group": "submission",
@@ -156,7 +200,11 @@
       "size_bytes": 4636391,
       "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/ei1333/54047084/episode-81858853-replay.json",
       "episode_create_time": "2026-06-25 16:25:30.279000",
-      "episode_end_time": "2026-06-25 16:27:46.976000"
+      "episode_end_time": "2026-06-25 16:27:46.976000",
+      "player_index": 1,
+      "player_result": "win",
+      "player_reward": 1,
+      "winner": "ei1333"
     },
     {
       "group": "submission",
@@ -169,7 +217,11 @@
       "size_bytes": 4461985,
       "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/ei1333/54047084/episode-81859477-replay.json",
       "episode_create_time": "2026-06-25 16:29:36.812000",
-      "episode_end_time": "2026-06-25 16:31:41.671000"
+      "episode_end_time": "2026-06-25 16:31:41.671000",
+      "player_index": 1,
+      "player_result": "win",
+      "player_reward": 1,
+      "winner": "ei1333"
     },
     {
       "group": "submission",
@@ -182,7 +234,11 @@
       "size_bytes": 2165844,
       "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/ei1333/54047084/episode-81859514-replay.json",
       "episode_create_time": "2026-06-25 16:29:36.871000",
-      "episode_end_time": "2026-06-25 16:31:47.328000"
+      "episode_end_time": "2026-06-25 16:31:47.328000",
+      "player_index": 0,
+      "player_result": "loss",
+      "player_reward": -1,
+      "winner": "JJ Bean"
     },
     {
       "group": "submission",
@@ -195,7 +251,11 @@
       "size_bytes": 589668,
       "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/ei1333/54047084/episode-81860116-replay.json",
       "episode_create_time": "2026-06-25 16:33:30.853000",
-      "episode_end_time": "2026-06-25 16:35:37.281000"
+      "episode_end_time": "2026-06-25 16:35:37.281000",
+      "player_index": 0,
+      "player_result": "win",
+      "player_reward": 1,
+      "winner": "ei1333"
     },
     {
       "group": "submission",
@@ -208,7 +268,11 @@
       "size_bytes": 4128629,
       "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/ei1333/54047084/episode-81860582-replay.json",
       "episode_create_time": "2026-06-25 16:37:33.004000",
-      "episode_end_time": "2026-06-25 16:39:42.710000"
+      "episode_end_time": "2026-06-25 16:39:42.710000",
+      "player_index": 1,
+      "player_result": "win",
+      "player_reward": 1,
+      "winner": "ei1333"
     },
     {
       "group": "submission",
@@ -221,7 +285,11 @@
       "size_bytes": 6285080,
       "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/ei1333/54047084/episode-81861214-replay.json",
       "episode_create_time": "2026-06-25 16:41:31.633000",
-      "episode_end_time": "2026-06-25 16:43:42.818000"
+      "episode_end_time": "2026-06-25 16:43:42.818000",
+      "player_index": 0,
+      "player_result": "loss",
+      "player_reward": -1,
+      "winner": "Hiro0811"
     },
     {
       "group": "submission",
@@ -234,7 +302,11 @@
       "size_bytes": 2508760,
       "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/ei1333/54047084/episode-81861835-replay.json",
       "episode_create_time": "2026-06-25 16:45:31.985000",
-      "episode_end_time": "2026-06-25 16:47:49.958000"
+      "episode_end_time": "2026-06-25 16:47:49.958000",
+      "player_index": 1,
+      "player_result": "loss",
+      "player_reward": -1,
+      "winner": "Civitas"
     },
     {
       "group": "submission",
@@ -247,7 +319,11 @@
       "size_bytes": 4840332,
       "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/ei1333/54047084/episode-81862467-replay.json",
       "episode_create_time": "2026-06-25 16:49:31.641000",
-      "episode_end_time": "2026-06-25 16:52:26.115000"
+      "episode_end_time": "2026-06-25 16:52:26.115000",
+      "player_index": 1,
+      "player_result": "loss",
+      "player_reward": -1,
+      "winner": "fujihara"
     },
     {
       "group": "submission",
@@ -255,12 +331,16 @@
       "player_slug": "ei1333",
       "submission_id": "54073539",
       "episode_id": "82071355",
+      "episode_create_time": "2026-06-26 18:48:36.130000",
+      "episode_end_time": "2026-06-26 18:50:40.866000",
       "opponent": "ACoder",
+      "player_index": 1,
+      "player_result": "loss",
+      "player_reward": -1,
+      "winner": "ACoder",
       "file_name": "episode-82071355-replay.json",
       "size_bytes": 1872260,
-      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/ei1333/54073539/episode-82071355-replay.json",
-      "episode_create_time": "2026-06-26 18:48:36.130000",
-      "episode_end_time": "2026-06-26 18:50:40.866000"
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/ei1333/54073539/episode-82071355-replay.json"
     },
     {
       "group": "submission",
@@ -268,12 +348,16 @@
       "player_slug": "ei1333",
       "submission_id": "54073539",
       "episode_id": "82073499",
+      "episode_create_time": "2026-06-26 19:04:32.884000",
+      "episode_end_time": "2026-06-26 19:06:53.569000",
       "opponent": "Mogja J",
+      "player_index": 1,
+      "player_result": "loss",
+      "player_reward": -1,
+      "winner": "Mogja J",
       "file_name": "episode-82073499-replay.json",
       "size_bytes": 1780388,
-      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/ei1333/54073539/episode-82073499-replay.json",
-      "episode_create_time": "2026-06-26 19:04:32.884000",
-      "episode_end_time": "2026-06-26 19:06:53.569000"
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/ei1333/54073539/episode-82073499-replay.json"
     },
     {
       "group": "submission",
@@ -281,12 +365,16 @@
       "player_slug": "ei1333",
       "submission_id": "54073539",
       "episode_id": "82075318",
+      "episode_create_time": "2026-06-26 19:16:42.799000",
+      "episode_end_time": "2026-06-26 19:18:48.031000",
       "opponent": "Efthimios",
+      "player_index": 1,
+      "player_result": "win",
+      "player_reward": 1,
+      "winner": "ei1333",
       "file_name": "episode-82075318-replay.json",
       "size_bytes": 3741540,
-      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/ei1333/54073539/episode-82075318-replay.json",
-      "episode_create_time": "2026-06-26 19:16:42.799000",
-      "episode_end_time": "2026-06-26 19:18:48.031000"
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/ei1333/54073539/episode-82075318-replay.json"
     },
     {
       "group": "submission",
@@ -294,12 +382,16 @@
       "player_slug": "ei1333",
       "submission_id": "54073539",
       "episode_id": "82089496",
+      "episode_create_time": "2026-06-26 20:57:04.139000",
+      "episode_end_time": "2026-06-26 20:59:24.319000",
       "opponent": "Hiyato",
+      "player_index": 1,
+      "player_result": "win",
+      "player_reward": 1,
+      "winner": "ei1333",
       "file_name": "episode-82089496-replay.json",
       "size_bytes": 3121080,
-      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/ei1333/54073539/episode-82089496-replay.json",
-      "episode_create_time": "2026-06-26 20:57:04.139000",
-      "episode_end_time": "2026-06-26 20:59:24.319000"
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/ei1333/54073539/episode-82089496-replay.json"
     },
     {
       "group": "submission",
@@ -307,12 +399,16 @@
       "player_slug": "ei1333",
       "submission_id": "54073539",
       "episode_id": "82100525",
+      "episode_create_time": "2026-06-26 22:13:20.719000",
+      "episode_end_time": "2026-06-26 22:15:53.994000",
       "opponent": "Oshbocker",
+      "player_index": 0,
+      "player_result": "win",
+      "player_reward": 1,
+      "winner": "ei1333",
       "file_name": "episode-82100525-replay.json",
       "size_bytes": 4240011,
-      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/ei1333/54073539/episode-82100525-replay.json",
-      "episode_create_time": "2026-06-26 22:13:20.719000",
-      "episode_end_time": "2026-06-26 22:15:53.994000"
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/ei1333/54073539/episode-82100525-replay.json"
     },
     {
       "group": "submission",
@@ -320,12 +416,16 @@
       "player_slug": "ei1333",
       "submission_id": "54073539",
       "episode_id": "82109132",
+      "episode_create_time": "2026-06-26 23:13:19.589000",
+      "episode_end_time": "2026-06-26 23:15:35.488000",
       "opponent": "iruka4444",
+      "player_index": 0,
+      "player_result": "win",
+      "player_reward": 1,
+      "winner": "ei1333",
       "file_name": "episode-82109132-replay.json",
       "size_bytes": 3309931,
-      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/ei1333/54073539/episode-82109132-replay.json",
-      "episode_create_time": "2026-06-26 23:13:19.589000",
-      "episode_end_time": "2026-06-26 23:15:35.488000"
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/ei1333/54073539/episode-82109132-replay.json"
     },
     {
       "group": "submission",
@@ -333,12 +433,16 @@
       "player_slug": "ei1333",
       "submission_id": "54073539",
       "episode_id": "82116531",
+      "episode_create_time": "2026-06-27 00:05:17.856000",
+      "episode_end_time": "2026-06-27 00:07:36.364000",
       "opponent": "Moegi",
+      "player_index": 1,
+      "player_result": "loss",
+      "player_reward": -1,
+      "winner": "Moegi",
       "file_name": "episode-82116531-replay.json",
       "size_bytes": 895947,
-      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/ei1333/54073539/episode-82116531-replay.json",
-      "episode_create_time": "2026-06-27 00:05:17.856000",
-      "episode_end_time": "2026-06-27 00:07:36.364000"
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/ei1333/54073539/episode-82116531-replay.json"
     },
     {
       "group": "submission",
@@ -346,12 +450,16 @@
       "player_slug": "ei1333",
       "submission_id": "54073539",
       "episode_id": "82134511",
+      "episode_create_time": "2026-06-27 02:09:43.470000",
+      "episode_end_time": "2026-06-27 02:11:57.573000",
       "opponent": "Pixegami",
+      "player_index": 0,
+      "player_result": "win",
+      "player_reward": 1,
+      "winner": "ei1333",
       "file_name": "episode-82134511-replay.json",
       "size_bytes": 3243943,
-      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/ei1333/54073539/episode-82134511-replay.json",
-      "episode_create_time": "2026-06-27 02:09:43.470000",
-      "episode_end_time": "2026-06-27 02:11:57.573000"
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/ei1333/54073539/episode-82134511-replay.json"
     },
     {
       "group": "submission",
@@ -359,12 +467,16 @@
       "player_slug": "ei1333",
       "submission_id": "54073539",
       "episode_id": "82156916",
+      "episode_create_time": "2026-06-27 04:49:22.793000",
+      "episode_end_time": "2026-06-27 04:51:42.676000",
       "opponent": "Raihan Ramadistra",
+      "player_index": 0,
+      "player_result": "loss",
+      "player_reward": -1,
+      "winner": "Raihan Ramadistra",
       "file_name": "episode-82156916-replay.json",
       "size_bytes": 2006610,
-      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/ei1333/54073539/episode-82156916-replay.json",
-      "episode_create_time": "2026-06-27 04:49:22.793000",
-      "episode_end_time": "2026-06-27 04:51:42.676000"
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/ei1333/54073539/episode-82156916-replay.json"
     },
     {
       "group": "submission",
@@ -372,12 +484,16 @@
       "player_slug": "ei1333",
       "submission_id": "54073539",
       "episode_id": "82172561",
+      "episode_create_time": "2026-06-27 06:45:24.241000",
+      "episode_end_time": "2026-06-27 06:47:49.006000",
       "opponent": "むにちゃちゃ",
+      "player_index": 1,
+      "player_result": "win",
+      "player_reward": 1,
+      "winner": "ei1333",
       "file_name": "episode-82172561-replay.json",
       "size_bytes": 3429853,
-      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/ei1333/54073539/episode-82172561-replay.json",
-      "episode_create_time": "2026-06-27 06:45:24.241000",
-      "episode_end_time": "2026-06-27 06:47:49.006000"
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/ei1333/54073539/episode-82172561-replay.json"
     }
   ]
 }

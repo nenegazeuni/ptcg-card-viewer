@@ -646,6 +646,25 @@ renderPlayer = function(el, ps, who, isTurn){
     <div class="cards">${handHtml}</div>`;
 };
 P = function(ev){ return ev.playerIndex!=null?playerLabel(ev.playerIndex):''; };
+function playerName(index){
+  return __PTCG_TEAM_NAMES[index] || `P${index}`;
+}
+function selectActionName(select){
+  if(!select) return '-';
+  const type = select.type;
+  const context = select.context;
+  if(type === 'Main' && context === 'Main') return 'メイン行動';
+  if(type === 'YesNo' && context === 'Mulligan') return 'マリガン確認';
+  if(context === 'InitialPokemon') return '最初のポケモン選択';
+  if(context === 'PokemonCheck') return 'ポケモン確認';
+  if(context === 'Trainer') return 'トレーナーズ処理';
+  if(context === 'Attack') return 'ワザ処理';
+  return [type, context].filter(Boolean).join(' / ') || '-';
+}
+function selectTitle(snapshot){
+  const index = snapshot.current?.yourIndex ?? 0;
+  return `${playerName(index)} / ${selectActionName(snapshot.select)}`;
+}
 function cardDisplayName(card){
   if(!card) return null;
   return card.name || nm(card.id ?? card.cardId);
@@ -730,7 +749,19 @@ describeSelected = function(s){
     const o=opts[i]; if(!o) return `#${i}`;
     return describeOption(s, i, o);
   });
-  return `${s.select.type}/${s.select.context} → ${parts.join(' , ')}`;
+  return `${selectTitle(s)} → ${parts.join(' , ')}`;
+};
+pinHeaderWidths = function(){
+  const ctxLabels=new Set(['-']);
+  let maxTurn=0;
+  for(const s of SNAP){
+    ctxLabels.add(selectActionName(s.select));
+    const t=s.current&&s.current.turn;
+    if(typeof t==='number'&&t>maxTurn) maxTurn=t;
+  }
+  measureMax(document.getElementById('ctx'), [...ctxLabels]);
+  measureMax(document.getElementById('stepno'), [SNAP.length+'/'+SNAP.length]);
+  measureMax(document.getElementById('turn'), ['-', String(maxTurn||1)]);
 };
 render = function(){
   const s=SNAP[idx], cur=s.current;
@@ -738,7 +769,7 @@ render = function(){
   document.getElementById('stepno').textContent=`${idx+1}/${SNAP.length}`;
   document.getElementById('turn').textContent=cur.turn;
   document.getElementById('active').textContent=playerLabel(cur.yourIndex);
-  document.getElementById('ctx').textContent=(s.select&&s.select.context)||'-';
+  document.getElementById('ctx').textContent=selectActionName(s.select);
   const res=document.getElementById('result');
   res.innerHTML = cur.result>=0 ? `<b style="color:var(--hpgood)">RESULT: ${cur.result===2?T('draw'):T('win',playerLabel(cur.result))}</b>` : '';
 

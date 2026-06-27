@@ -672,7 +672,11 @@ function selectTitle(snapshot){
 }
 function cardDisplayName(card){
   if(!card) return null;
-  return card.name || nm(card.id ?? card.cardId);
+  const id = card.id ?? card.cardId;
+  const jp = id != null && typeof __PTCG_JP_CARD_NAMES !== 'undefined' && __PTCG_JP_CARD_NAMES
+    ? __PTCG_JP_CARD_NAMES[String(id)]
+    : null;
+  return jp || card.name || nm(id);
 }
 function cardsForArea(snapshot, areaId, playerIndex){
   const cur = snapshot.current || {};
@@ -709,7 +713,6 @@ function optionExtra(o){
 }
 function describeOption(snapshot, optionIndex, option){
   const playerIndex = option.playerIndex ?? snapshot.current?.yourIndex ?? 0;
-  const actor = playerLabel(playerIndex);
   const source = option.area != null
     ? describeAreaCard(snapshot, option.area, option.index, playerIndex)
     : null;
@@ -718,37 +721,38 @@ function describeOption(snapshot, optionIndex, option){
     : null;
   switch(option.type){
     case 'Attach':
-      return `[${optionIndex}] ${actor}: ${source || 'カード'} を ${target || 'ポケモン'} に付ける`;
+      return `${source || 'カード'} を ${target || 'ポケモン'} に付ける`;
     case 'Evolve':
-      return `[${optionIndex}] ${actor}: ${source || 'カード'} で ${target || 'ポケモン'} を進化`;
+      return `${source || 'カード'} で ${target || 'ポケモン'} を進化`;
     case 'Ability':
-      return `[${optionIndex}] ${actor}: ${(target || source || 'ポケモン')} の特性を使う${optionExtra(option)}`;
+      return `${(target || source || 'ポケモン')} の特性を使う${optionExtra(option)}`;
     case 'Attack':
-      return `[${optionIndex}] ${actor}: ${(target || source || 'ポケモン')} でワザを使う${optionExtra(option)}`;
+      return `${(target || source || 'ポケモン')} でワザを使う${optionExtra(option)}`;
     case 'Energy':
-      return `[${optionIndex}] ${actor}: ${(target || source || area(option.area))} のエネルギーを選択${optionExtra(option)}`;
+      return `${(target || source || area(option.area))} のエネルギーを選択${optionExtra(option)}`;
     case 'Card':
-      return `[${optionIndex}] ${actor}: ${source || 'カード'} を選択${optionExtra(option)}`;
+      return `${source || 'カード'} を選択${optionExtra(option)}`;
     case 'Yes':
     case 'No':
-      return `[${optionIndex}] ${option.type}`;
+      return `${option.type}`;
     default:{
       const raw = [];
       for(const f of ['index','area','inPlayArea','inPlayIndex','attackId','cardId','number']){
         if(option[f] != null) raw.push(`${f}=${f === 'cardId' ? nm(option[f]) : option[f]}`);
       }
-      return `[${optionIndex}] ${option.type}${raw.length ? ' ' + raw.join(' ') : ''}`;
+      return `${option.type}${raw.length ? ' ' + raw.join(' ') : ''}`;
     }
   }
 }
 describeSelected = function(s){
   if(!s.selected||!s.select) return '-';
   const opts=s.select.option||[];
-  const parts=s.selected.map(i=>{
-    const o=opts[i]; if(!o) return `#${i}`;
-    return describeOption(s, i, o);
-  });
-  return `${selectTitle(s)} → ${parts.join(' , ')}`;
+  const selected = s.selected.map(i => opts[i]).filter(Boolean);
+  if(!selected.length) return `${selectTitle(s)} → -`;
+  const primary = describeOption(s, s.selected[0], selected[0]);
+  const fallbackCount = selected.length - 1;
+  const fallback = fallbackCount > 0 ? `（予備候補 ${fallbackCount}件）` : '';
+  return `${selectTitle(s)} → ${primary}${fallback}`;
 };
 render = function(){
   const s=SNAP[idx], cur=s.current;

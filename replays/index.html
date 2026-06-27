@@ -20,6 +20,9 @@
     .viewer-nav { display: flex; gap: 10px; margin-bottom: 18px; }
     .viewer-nav a { color: #2563eb; font-weight: 700; text-decoration: none; }
     .viewer-nav a:hover { text-decoration: underline; }
+    .filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 18px; }
+    .filters button { border: 1px solid #d0d7de; border-radius: 8px; background: #fff; cursor: pointer; font: inherit; font-weight: 700; padding: 7px 12px; }
+    .filters button.active { border-color: #b91c1c; background: #fef2f2; color: #b91c1c; }
   </style>
 </head>
 <body>
@@ -30,10 +33,17 @@
   </nav>
   <h1>PTCG AI Battle Replays</h1>
   <p class="muted">Replay JSON は外部ストレージから読み込みます。</p>
+  <div class="filters" aria-label="リプレイ絞り込み">
+    <button type="button" class="active" data-filter="all">すべて</button>
+    <button type="button" data-filter="loss">負けた試合だけ</button>
+  </div>
   <div id="replays"></div>
   <script>
     const pagesUrl = "https://nenegazeuni.github.io/ptcg-card-viewer/";
     const replays = document.getElementById("replays");
+    const filterButtons = [...document.querySelectorAll("[data-filter]")];
+    let allReplayItems = [];
+    let currentFilter = "all";
     const fmt = new Intl.NumberFormat("ja-JP", { maximumFractionDigits: 1 });
     const dateFmt = new Intl.DateTimeFormat("ja-JP", {
       dateStyle: "short",
@@ -89,12 +99,23 @@
         return acc;
       }, {});
     }
-    fetch(`manifest.json?ts=${Date.now()}`).then(r => r.json()).then(manifest => {
-      const players = groupBy(manifest.items || [], "player");
+    function visibleItems() {
+      if (currentFilter === "loss") {
+        return allReplayItems.filter(item => item.player_result === "loss");
+      }
+      return allReplayItems;
+    }
+    function renderReplays() {
+      const items = visibleItems();
+      if (!items.length) {
+        replays.innerHTML = '<p class="muted">該当するリプレイはありません。</p>';
+        return;
+      }
+      const players = groupBy(items, "player");
       replays.innerHTML = Object.entries(players).map(([player, playerItems]) => {
         const submissions = groupBy(playerItems, "submission_id");
-        const submissionHtml = Object.entries(submissions).map(([submissionId, items]) => {
-          const rows = items.map(item => {
+        const submissionHtml = Object.entries(submissions).map(([submissionId, submissionItems]) => {
+          const rows = submissionItems.map(item => {
             const viewer = `${pagesUrl}replay_viewer.html?replay=${encodeURIComponent(item.url)}`;
             const mb = fmt.format((item.size_bytes || 0) / 1000000);
             return `<tr>
@@ -106,10 +127,10 @@
               <td><a href="${viewer}">開く</a></td>
             </tr>`;
           }).join("");
-          const submittedAt = formatTime(latestEpisodeTime(items));
-          const results = resultSummary(items);
+          const submittedAt = formatTime(latestEpisodeTime(submissionItems));
+          const results = resultSummary(submissionItems);
           return `<details class="submission" open>
-            <summary>submission ${submissionId} / ${submittedAt} / ${results}（${items.length} replays）</summary>
+            <summary>submission ${submissionId} / ${submittedAt} / ${results}（${submissionItems.length} replays）</summary>
             <table>
               <thead><tr><th>Episode</th><th>Time</th><th>Result</th><th>Opponent</th><th>Size</th><th>Viewer</th></tr></thead>
               <tbody>${rows}</tbody>
@@ -121,6 +142,17 @@
           ${submissionHtml}
         </details>`;
       }).join("");
+    }
+    filterButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        currentFilter = button.dataset.filter || "all";
+        filterButtons.forEach(item => item.classList.toggle("active", item === button));
+        renderReplays();
+      });
+    });
+    fetch(`manifest.json?ts=${Date.now()}`).then(r => r.json()).then(manifest => {
+      allReplayItems = manifest.items || [];
+      renderReplays();
     });
   </script>
 </body>

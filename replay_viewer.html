@@ -706,20 +706,46 @@ function describeAreaCard(snapshot, areaId, index, playerIndex){
 }
 function optionExtra(o){
   const fields = [];
-  for(const f of ['attackId','cardId','number']){
-    if(o[f] != null) fields.push(`${f}=${o[f]}`);
+  for(const f of ['cardId','number']){
+    if(o[f] != null) fields.push(`${f}=${f === 'cardId' ? nm(o[f]) : o[f]}`);
   }
   return fields.length ? ` ${fields.join(' ')}` : '';
 }
+function describeCardChoice(context, source){
+  const card = source || 'カード';
+  switch(context){
+    case 'ToHand': return `${card}を手札に加える`;
+    case 'ToBench':
+    case 'SetupBenchPokemon': return `${card}をベンチに出す`;
+    case 'ToActive':
+    case 'SetupActivePokemon': return `${card}をバトル場に出す`;
+    case 'Discard': return `${card}をトラッシュする`;
+    case 'ToDeck': return `${card}を山札に戻す`;
+    case 'Switch': return `${card}と入れ替える`;
+    case 'Damage':
+    case 'DamageCounter':
+    case 'DamageCounterAny': return `${card}にダメカンを置く`;
+    case 'Heal': return `${card}を回復する`;
+    case 'AttachFrom': return `${card}のエネルギーを選ぶ`;
+    case 'AttachTo': return `${card}に付ける`;
+    case 'EvolvesTo': return `${card}へ進化する`;
+    case 'EvolvesFrom': return `${card}から進化する`;
+    default: return `${card}を選択`;
+  }
+}
 function describeOption(snapshot, optionIndex, option){
   const playerIndex = option.playerIndex ?? snapshot.current?.yourIndex ?? 0;
+  const context = snapshot.select?.context;
+  const sourceArea = option.area ?? (option.type === 'Play' ? 2 : null);
   const source = option.area != null
-    ? describeAreaCard(snapshot, option.area, option.index, playerIndex)
+    ? describeAreaCard(snapshot, sourceArea, option.index, playerIndex)
     : null;
   const target = option.inPlayArea != null
     ? describeAreaCard(snapshot, option.inPlayArea, option.inPlayIndex, playerIndex)
     : null;
   switch(option.type){
+    case 'Play':
+      return `${describeAreaCard(snapshot, 2, option.index, playerIndex)}を使う`;
     case 'Attach':
       return `${source || 'カード'} を ${target || 'ポケモン'} に付ける`;
     case 'Evolve':
@@ -727,17 +753,19 @@ function describeOption(snapshot, optionIndex, option){
     case 'Ability':
       return `${(target || source || 'ポケモン')} の特性を使う${optionExtra(option)}`;
     case 'Attack':
-      return `${(target || source || 'ポケモン')} でワザを使う${optionExtra(option)}`;
+      return `${(target || source || 'ポケモン')}でワザを使う`;
     case 'Energy':
       return `${(target || source || area(option.area))} のエネルギーを選択${optionExtra(option)}`;
     case 'Card':
-      return `${source || 'カード'} を選択${optionExtra(option)}`;
+      return describeCardChoice(context, source);
     case 'Yes':
     case 'No':
-      return `${option.type}`;
+      return option.type === 'Yes' ? 'はい' : 'いいえ';
+    case 'Number':
+      return `${option.number ?? ''}を選ぶ`;
     default:{
       const raw = [];
-      for(const f of ['index','area','inPlayArea','inPlayIndex','attackId','cardId','number']){
+      for(const f of ['cardId','number']){
         if(option[f] != null) raw.push(`${f}=${f === 'cardId' ? nm(option[f]) : option[f]}`);
       }
       return `${option.type}${raw.length ? ' ' + raw.join(' ') : ''}`;

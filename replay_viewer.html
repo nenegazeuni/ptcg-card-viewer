@@ -646,6 +646,92 @@ renderPlayer = function(el, ps, who, isTurn){
     <div class="cards">${handHtml}</div>`;
 };
 P = function(ev){ return ev.playerIndex!=null?playerLabel(ev.playerIndex):''; };
+function cardDisplayName(card){
+  if(!card) return null;
+  return card.name || nm(card.id ?? card.cardId);
+}
+function cardsForArea(snapshot, areaId, playerIndex){
+  const cur = snapshot.current || {};
+  const player = (cur.players || [])[playerIndex];
+  switch(areaId){
+    case 1: return snapshot.select?.deck || [];
+    case 2: return player?.hand || [];
+    case 3: return player?.discard || [];
+    case 4: return player?.active || [];
+    case 5: return player?.bench || [];
+    case 6: return player?.prize || [];
+    case 7: return cur.stadium || [];
+    case 12: return cur.looking || [];
+    default: return [];
+  }
+}
+function cardAtArea(snapshot, areaId, index, playerIndex){
+  if(index == null) return null;
+  const cards = cardsForArea(snapshot, areaId, playerIndex);
+  return cards[index] || null;
+}
+function describeAreaCard(snapshot, areaId, index, playerIndex){
+  const card = cardAtArea(snapshot, areaId, index, playerIndex);
+  const name = cardDisplayName(card);
+  const place = `${area(areaId)}${index != null ? index + 1 : ''}`;
+  return name ? `${name}（${place}）` : `${place}`;
+}
+function describeInPlayCard(snapshot, areaId, index, playerIndex){
+  const card = cardAtArea(snapshot, areaId, index, playerIndex);
+  const name = cardDisplayName(card);
+  const place = `${area(areaId)}${index != null ? index + 1 : ''}`;
+  return name ? `${name}（${place}）` : `${place}`;
+}
+function optionExtra(o){
+  const fields = [];
+  for(const f of ['attackId','cardId','number']){
+    if(o[f] != null) fields.push(`${f}=${o[f]}`);
+  }
+  return fields.length ? ` ${fields.join(' ')}` : '';
+}
+function describeOption(snapshot, optionIndex, option){
+  const playerIndex = option.playerIndex ?? snapshot.current?.yourIndex ?? 0;
+  const actor = playerLabel(playerIndex);
+  const source = option.area != null
+    ? describeAreaCard(snapshot, option.area, option.index, playerIndex)
+    : null;
+  const target = option.inPlayArea != null
+    ? describeInPlayCard(snapshot, option.inPlayArea, option.inPlayIndex, playerIndex)
+    : null;
+  switch(option.type){
+    case 'Attach':
+      return `[${optionIndex}] ${actor}: ${source || 'カード'} を ${target || 'ポケモン'} に付ける`;
+    case 'Evolve':
+      return `[${optionIndex}] ${actor}: ${source || 'カード'} で ${target || 'ポケモン'} を進化`;
+    case 'Ability':
+      return `[${optionIndex}] ${actor}: ${(target || source || 'ポケモン')} の特性を使う${optionExtra(option)}`;
+    case 'Attack':
+      return `[${optionIndex}] ${actor}: ${(target || source || 'ポケモン')} でワザを使う${optionExtra(option)}`;
+    case 'Energy':
+      return `[${optionIndex}] ${actor}: ${(target || source || area(option.area))} のエネルギーを選択${optionExtra(option)}`;
+    case 'Card':
+      return `[${optionIndex}] ${actor}: ${source || 'カード'} を選択${optionExtra(option)}`;
+    case 'Yes':
+    case 'No':
+      return `[${optionIndex}] ${option.type}`;
+    default:{
+      const raw = [];
+      for(const f of ['index','area','inPlayArea','inPlayIndex','attackId','cardId','number']){
+        if(option[f] != null) raw.push(`${f}=${option[f]}`);
+      }
+      return `[${optionIndex}] ${option.type}${raw.length ? ' ' + raw.join(' ') : ''}`;
+    }
+  }
+}
+describeSelected = function(s){
+  if(!s.selected||!s.select) return '-';
+  const opts=s.select.option||[];
+  const parts=s.selected.map(i=>{
+    const o=opts[i]; if(!o) return `#${i}`;
+    return describeOption(s, i, o);
+  });
+  return `${s.select.type}/${s.select.context} → ${parts.join(' , ')}`;
+};
 render = function(){
   const s=SNAP[idx], cur=s.current;
   document.getElementById('slider').value=idx;

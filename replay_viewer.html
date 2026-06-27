@@ -140,7 +140,7 @@
   </div>
   <div class="side">
     <div class="selbox">
-      <h3 data-i18n="selectedTitle">この手で選んだアクション</h3>
+      <h3 data-i18n="selectedTitle">この場面で選ばれた操作</h3>
       <div class="sel" id="selected">-</div>
     </div>
     <div class="logbox">
@@ -172,7 +172,7 @@ const I18N={
     prev:'◀ 前へ', next:'次へ ▶', step:'手数', turn:'ターン', active:'手番', ctx:'ctx', openFile:'ファイルを開く',
     dropTitle:'リプレイ JSON をドロップ', or:'または', chooseFile:'ファイルを選択',
     dropHint:'<code>visualize_data()</code> が出力したリプレイ JSON を読み込みます',
-    selectedTitle:'この手で選んだアクション', logTitle:'ログ（この選択まで）',
+    selectedTitle:'この場面で選ばれた操作', logTitle:'ログ（この選択まで）',
     close:'✕ 閉じる', discardEmpty:'（トラッシュは空です）', discardTitle:(p,c)=>`P${p} トラッシュ（${c}枚）`,
     deck:'山札', hand:'手札', prize:'サイド', discard:'トラッシュ', turnFlag:'▶ 手番',
     battle:'バトル場', bench:'ベンチ', noBench:'（ベンチなし）', noHand:'（手札なし）', clickDiscard:'クリックでトラッシュ一覧',
@@ -199,7 +199,7 @@ const I18N={
     prev:'◀ Prev', next:'Next ▶', step:'step', turn:'turn', active:'active', ctx:'ctx', openFile:'Open file',
     dropTitle:'Drop replay JSON', or:'or', chooseFile:'Choose file',
     dropHint:'Loads a replay JSON produced by <code>visualize_data()</code>',
-    selectedTitle:'Selected action (this step)', logTitle:'Log (up to this choice)',
+    selectedTitle:'Chosen action', logTitle:'Log (up to this choice)',
     close:'✕ Close', discardEmpty:'(discard is empty)', discardTitle:(p,c)=>`P${p} Discard (${c})`,
     deck:'Deck', hand:'Hand', prize:'Prize', discard:'Discard', turnFlag:'▶ Turn',
     battle:'Active', bench:'Bench', noBench:'(no bench)', noHand:'(no hand)', clickDiscard:'Click to view discard',
@@ -651,13 +651,112 @@ renderPlayer = function(el, ps, who, isTurn){
     <div class="cards">${handHtml}</div>`;
 };
 P = function(ev){ return ev.playerIndex!=null?playerLabel(ev.playerIndex):''; };
+function playerName(index){
+  return __PTCG_TEAM_NAMES[index] || `P${index}`;
+}
+function selectActionName(select){
+  if(!select) return '-';
+  const type = select.type;
+  const context = select.context;
+  if(type === 'Main' && context === 'Main') return 'メイン行動';
+  if(type === 'YesNo' && context === 'Mulligan') return 'マリガン確認';
+  if(context === 'InitialPokemon') return '最初のポケモン選択';
+  if(context === 'PokemonCheck') return 'ポケモン確認';
+  if(context === 'Trainer') return 'トレーナーズ処理';
+  if(context === 'Attack') return 'ワザ処理';
+  return [type, context].filter(Boolean).join(' / ') || '-';
+}
+function selectTitle(snapshot){
+  const index = snapshot.current?.yourIndex ?? 0;
+  return `${playerName(index)} / ${selectActionName(snapshot.select)}`;
+}
+function cardDisplayName(card){
+  if(!card) return null;
+  return card.name || nm(card.id ?? card.cardId);
+}
+function cardsForArea(snapshot, areaId, playerIndex){
+  const cur = snapshot.current || {};
+  const player = (cur.players || [])[playerIndex];
+  switch(areaId){
+    case 1: return snapshot.select?.deck || [];
+    case 2: return player?.hand || [];
+    case 3: return player?.discard || [];
+    case 4: return player?.active || [];
+    case 5: return player?.bench || [];
+    case 6: return player?.prize || [];
+    case 7: return cur.stadium || [];
+    case 12: return cur.looking || [];
+    default: return [];
+  }
+}
+function cardAtArea(snapshot, areaId, index, playerIndex){
+  if(index == null) return null;
+  const cards = cardsForArea(snapshot, areaId, playerIndex);
+  return cards[index] || null;
+}
+function describeAreaCard(snapshot, areaId, index, playerIndex){
+  const card = cardAtArea(snapshot, areaId, index, playerIndex);
+  const name = cardDisplayName(card);
+  const place = `${area(areaId)}${index != null ? index + 1 : ''}`;
+  return name ? `${name}（${place}）` : `${place}`;
+}
+function optionExtra(o){
+  const fields = [];
+  for(const f of ['attackId','cardId','number']){
+    if(o[f] != null) fields.push(`${f}=${o[f]}`);
+  }
+  return fields.length ? ` ${fields.join(' ')}` : '';
+}
+function describeOption(snapshot, optionIndex, option){
+  const playerIndex = option.playerIndex ?? snapshot.current?.yourIndex ?? 0;
+  const actor = playerLabel(playerIndex);
+  const source = option.area != null
+    ? describeAreaCard(snapshot, option.area, option.index, playerIndex)
+    : null;
+  const target = option.inPlayArea != null
+    ? describeAreaCard(snapshot, option.inPlayArea, option.inPlayIndex, playerIndex)
+    : null;
+  switch(option.type){
+    case 'Attach':
+      return `[${optionIndex}] ${actor}: ${source || 'カード'} を ${target || 'ポケモン'} に付ける`;
+    case 'Evolve':
+      return `[${optionIndex}] ${actor}: ${source || 'カード'} で ${target || 'ポケモン'} を進化`;
+    case 'Ability':
+      return `[${optionIndex}] ${actor}: ${(target || source || 'ポケモン')} の特性を使う${optionExtra(option)}`;
+    case 'Attack':
+      return `[${optionIndex}] ${actor}: ${(target || source || 'ポケモン')} でワザを使う${optionExtra(option)}`;
+    case 'Energy':
+      return `[${optionIndex}] ${actor}: ${(target || source || area(option.area))} のエネルギーを選択${optionExtra(option)}`;
+    case 'Card':
+      return `[${optionIndex}] ${actor}: ${source || 'カード'} を選択${optionExtra(option)}`;
+    case 'Yes':
+    case 'No':
+      return `[${optionIndex}] ${option.type}`;
+    default:{
+      const raw = [];
+      for(const f of ['index','area','inPlayArea','inPlayIndex','attackId','cardId','number']){
+        if(option[f] != null) raw.push(`${f}=${f === 'cardId' ? nm(option[f]) : option[f]}`);
+      }
+      return `[${optionIndex}] ${option.type}${raw.length ? ' ' + raw.join(' ') : ''}`;
+    }
+  }
+}
+describeSelected = function(s){
+  if(!s.selected||!s.select) return '-';
+  const opts=s.select.option||[];
+  const parts=s.selected.map(i=>{
+    const o=opts[i]; if(!o) return `#${i}`;
+    return describeOption(s, i, o);
+  });
+  return `${selectTitle(s)} → ${parts.join(' , ')}`;
+};
 render = function(){
   const s=SNAP[idx], cur=s.current;
   document.getElementById('slider').value=idx;
   document.getElementById('stepno').textContent=`${idx+1}/${SNAP.length}`;
   document.getElementById('turn').textContent=cur.turn;
   document.getElementById('active').textContent=playerLabel(cur.yourIndex);
-  document.getElementById('ctx').textContent=(s.select&&s.select.context)||'-';
+  document.getElementById('ctx').textContent=selectActionName(s.select);
   const res=document.getElementById('result');
   res.innerHTML = cur.result>=0 ? `<b style="color:var(--hpgood)">RESULT: ${cur.result===2?T('draw'):T('win',playerLabel(cur.result))}</b>` : '';
 

@@ -1344,6 +1344,23 @@
       "file_name": "episode-82172561-replay.json",
       "size_bytes": 3429853,
       "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/ei1333/54073539/episode-82172561-replay.json"
+    },
+    {
+      "group": "submission",
+      "player": "ei1333",
+      "player_slug": "ei1333",
+      "submission_id": "54133238",
+      "episode_id": "82383450",
+      "episode_create_time": "",
+      "episode_end_time": "",
+      "opponent": "Tomonobu Niwa",
+      "player_index": 0,
+      "player_result": "loss",
+      "player_reward": -1,
+      "winner": "Tomonobu Niwa",
+      "file_name": "episode-82383450-replay.json",
+      "size_bytes": 2833860,
+      "url": "https://pub-ff7b7cea45c949e0b2cf1069a2ab8f92.r2.dev/pokemon-tcg-ai-battle/replays/ei1333/54133238/episode-82383450-replay.json"
     }
   ]
 }

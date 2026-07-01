@@ -259,7 +259,7 @@ function collectNames(cur){
   if(!cur) return;
   for(const p of cur.players||[]){
     for(const z of ['active','bench','hand','deck','discard','prize']){
-      for(const c of p[z]||[]){ if(c&&c.id!=null&&c.name) names[c.id]=c.name;
+      for(const c of p[z]||[]){ if(!c) continue; if(c.id!=null&&c.name) names[c.id]=c.name;
         for(const sub of (c.energyCards||[]).concat(c.tools||[],c.preEvolution||[])) if(sub&&sub.name) names[sub.id]=sub.name;
       }
     }

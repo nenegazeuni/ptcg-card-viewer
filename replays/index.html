@@ -116,7 +116,7 @@
         const submissions = groupBy(playerItems, "submission_id");
         const submissionHtml = Object.entries(submissions).map(([submissionId, submissionItems]) => {
           const rows = submissionItems.map(item => {
-            const viewer = `${pagesUrl}replay_viewer.html?replay=${encodeURIComponent(item.url)}`;
+            const viewer = `${pagesUrl}replay_viewer.html?v=f0503ba&replay=${encodeURIComponent(item.url)}`;
             const mb = fmt.format((item.size_bytes || 0) / 1000000);
             return `<tr>
               <td>${item.episode_id}</td>

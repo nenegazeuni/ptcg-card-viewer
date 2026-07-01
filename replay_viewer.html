@@ -772,16 +772,18 @@ function describeOption(snapshot, optionIndex, option){
     }
   }
 }
-function selectedOptionIndexes(actionSnapshot){
-  const primary = actionSnapshot?.action?.[0];
-  if(Array.isArray(primary) && primary.length) return primary;
+function selectedOptionIndexes(snapshot, actionSnapshot){
+  if(snapshot?.__viewerSelectedAligned && Array.isArray(snapshot?.selected)) return snapshot.selected;
+  const playerIndex = snapshot?.current?.yourIndex ?? 0;
+  const playerAction = actionSnapshot?.action?.[playerIndex];
+  if(Array.isArray(playerAction) && playerAction.length) return playerAction;
   if(Array.isArray(actionSnapshot?.selected)) return actionSnapshot.selected;
   return [];
 }
 describeSelected = function(s, actionSnapshot){
   if(!s.select||!actionSnapshot) return '-';
   const opts=s.select.option||[];
-  const indexes = selectedOptionIndexes(actionSnapshot);
+  const indexes = selectedOptionIndexes(s, actionSnapshot);
   const selected = indexes.map(i => opts[i]).filter(Boolean);
   if(!selected.length) return `${selectTitle(s)} → -`;
   const primary = describeOption(s, indexes[0], selected[0]);
